@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flowers</title>
-        <!-- Chrome, Firefox, Edge, Android -->
+    <!-- Chrome, Firefox, Edge, Android -->
     <meta name="theme-color" content="#000000">
     <!-- Safari iOS (when added to home screen) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,6 +20,7 @@
     </div>
 
     <button class="start-btn" id="startBtn">What's that?</button>
+    <button class="back-btn" id="backBtn">&#8592;</button>
     <div class="frame">
       <div class="flower">
         <div class="container container-1">
@@ -63,6 +64,7 @@
         </div>
         <div class="flower-vase"></div>
       </div>
+
       <div class="catc">
             <img class="cat" src="images/cat2.png" />
       </div>
@@ -72,11 +74,24 @@
     // Start button
     const btn = document.getElementById('startBtn');
     const frame = document.querySelector('.frame');
+    const backBtn = document.getElementById('backBtn');
 
     btn.addEventListener('click', () => {
       btn.classList.add('hidden');
       frame.classList.add('visible');
       frame.classList.add('started');
+    });
+
+    backBtn.addEventListener('click', () => {
+    // hide frame and back button, show start button
+    frame.classList.remove('visible');
+    frame.classList.remove('started');
+    backBtn.classList.remove('visible');
+    btn.classList.remove('hidden');
+
+    // force animation reset by briefly removing and re-adding started
+    // a tiny timeout lets the browser register the class removal
+    void frame.offsetWidth;
     });
 
     // stars scaling

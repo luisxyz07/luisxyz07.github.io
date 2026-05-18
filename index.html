@@ -14,6 +14,7 @@
       <div id="stars3"></div>
     </div>
 
+    <button class="start-btn" id="startBtn">What's that?</button>
     <div class="frame">
       <div class="flower">
         <div class="container container-1">
@@ -63,6 +64,17 @@
     </div>
   </body>
   <script>
+    // Start button
+    const btn = document.getElementById('startBtn');
+    const frame = document.querySelector('.frame');
+
+    btn.addEventListener('click', () => {
+      btn.classList.add('hidden');
+      frame.classList.add('visible');
+      frame.classList.add('started');
+    });
+
+    // stars scaling
     function scaleStars() {
       const wrapper = document.querySelector('.wrapper');
       const scaleX = window.innerWidth / 2000;

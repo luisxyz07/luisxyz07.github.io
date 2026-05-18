@@ -23,6 +23,40 @@ body {
   display: flex;
   position: relative;
   z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.frame.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.start-btn {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  padding: 0.8rem 2.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease, opacity 0.5s ease;
+}
+
+.start-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.start-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .flower {
@@ -336,17 +370,39 @@ body {
 }
 
 .fall-down-yellow {
-  animation: flower-fall-down-yellow 8s 1.2s linear forwards;
-  -webkit-animation: flower-fall-down-yellow 8s 1.2s linear forwards;
+  animation: none;
 }
 
 .fall-down-pink {
-  animation: flower-fall-down-pink 5s 1.2s linear forwards;
-  -webkit-animation: flower-fall-down-pink 5s 1.2s linear forwards;
+  animation: none;
 }
 
 .fall-down-purple {
   bottom: 4vmin;
+  animation: none;
+}
+
+.started .leaf {
+  animation: open-flower 2s 1s backwards;
+  -webkit-animation: open-flower-middle 2s 1s backwards;
+}
+
+.started .leaf-1 {
+  animation: open-flower-middle 2s 1s backwards;
+  -webkit-animation: open-flower-middle 2s 1s backwards;
+}
+
+.started .fall-down-yellow {
+  animation: flower-fall-down-yellow 8s 1.2s linear forwards;
+  -webkit-animation: flower-fall-down-yellow 8s 1.2s linear forwards;
+}
+
+.started .fall-down-pink {
+  animation: flower-fall-down-pink 5s 1.2s linear forwards;
+  -webkit-animation: flower-fall-down-pink 5s 1.2s linear forwards;
+}
+
+.started .fall-down-purple {
   animation: flower-fall-down-purple 6s 1.2s linear forwards,
     flower-falling 6s 7.2s linear infinite;
   -webkit-animation: flower-fall-down-purple 6s 1.2s linear forwards,

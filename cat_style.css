@@ -238,3 +238,11 @@ body {
     }
 }
 
+@media screen and (min-width: 992px) {
+    .temp_message {
+        top: 10%;
+        font-size: 0.7rem;
+        padding: 1rem 3rem;
+    }
+}
+

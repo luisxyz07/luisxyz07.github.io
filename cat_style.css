@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crafty+Girls&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  background-color: #01000c;
+  padding: 0;
+  margin: 0;
+}
+.container {
+  height: 530px;
+  width: 350px;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.window {
+  width: 250px;
+  height: 390px;
+  background-color: #29467a;
+  outline: 12px solid #2d2623;
+  border-left: 5px solid #439abf;
+  border-right: 5px solid #439abf;
+  position: relative;
+  top: 20px;
+  left: 45px;
+}
+.window:before,
+.window:after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(#439abf 50%, #2d2623 50%);
+}
+.window:after {
+  height: 15px;
+  width: 260px;
+  left: -5px;
+  top: 200px;
+}
+.window:before {
+  height: 15px;
+  width: 310px;
+  left: -30px;
+  bottom: -15px;
+}
+.mountain-1 {
+  height: 0;
+  width: 0;
+  border-bottom: 60px solid #22366d;
+  border-right: 20px solid transparent;
+  position: absolute;
+  bottom: 0;
+}
+.mountain-1:before,
+.mountain-1:after,
+.mountain-2:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-bottom: 60px solid #22366d;
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
+}
+.mountain-1:before {
+  bottom: -60px;
+  left: 5px;
+}
+.mountain-1:after {
+  bottom: -60px;
+  left: 35px;
+}
+.mountain-2 {
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-bottom: 60px solid #22366d;
+  border-left: 20px solid transparent;
+  right: 0;
+  bottom: 0;
+}
+.mountain-2:before {
+  bottom: -60px;
+  right: 10px;
+}
+.kitty {
+  background-color: #2d2623;
+  height: 140px;
+  width: 50px;
+  position: absolute;
+  bottom: -15px;
+  left: 95px;
+  border-radius: 40px 40px 0 0;
+}
+.kitty:before {
+  content: "";
+  position: absolute;
+  background-color: #2d2623;
+  height: 80px;
+  width: 40px;
+  border-radius: 0 80px 80px 0;
+  bottom: 0;
+  left: 43px;
+}
+.kitty:after {
+  content: "";
+  position: absolute;
+  background-color: #2d2623;
+  height: 80px;
+  width: 10px;
+  border-radius: 5px;
+  bottom: -70px;
+  left: 45px;
+  transform: rotate(-15deg);
+  transform-origin: top;
+  animation: tail 5s infinite;
+}
+@keyframes tail {
+  50% {
+    transform: rotate(10deg);
+  }
+}
+.ear {
+  height: 0;
+  width: 0;
+  border-bottom: 40px solid #2d2623;
+  border-right: 33px solid transparent;
+  position: relative;
+  bottom: 12px;
+  animation: ear 2s infinite;
+}
+.ear:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-bottom: 40px solid #2d2623;
+  border-left: 33px solid transparent;
+  bottom: -40px;
+  left: 17px;
+}
+
+@keyframes ear {
+  50% {
+    transform: rotate(3.5deg);
+  }
+}
+
+
+.moon {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow: -15px 8px 0 1px #e8ae4a;
+  position: absolute;
+  left: 50px;
+  top: 60px;
+}
+.star {
+  background-color: #e8ae4a;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  left: 140px;
+  box-shadow: 80px 65px #e8ae4a, -120px 150px #e8ae4a, -80px 280px #e8ae4a,
+    70px 235px #e8ae4a, 40px 135px #e8ae4a;
+  animation: twinkle 3s infinite;
+}
+@keyframes twinkle {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.back-btn {
+  position: fixed;
+  top: 3.5rem;
+  left: 1rem;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  opacity: 1;
+  pointer-events: all;
+  transition: background 0.3s ease, opacity 0.5s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.back-btn.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.temp_message {
+    text-align: center;
+    opacity: 1;
+    pointer-events: all;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    font-family: "Crafty Girls", cursive;
+    background: transparent;
+    color: #fff;
+    font-size: 1.5rem;
+    letter-spacing: 0.2em;
+    padding: 0.8rem 2.5rem;
+    border-radius: 4px;
+    transition: background 0.3s ease, opacity 0.5s ease;
+}
+
+@media screen and (min-width: 100px) {
+    .temp_message {
+        font-size: 1rem;
+        padding: 1rem 3rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .temp_message {
+        font-size: 1rem;
+        padding: 1rem 3rem;
+    }
+}
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat Animation</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="cat_style.css" />
+  </head>
+  <body>
+    <button class="back-btn" id="backBtn">&#8592;</button>
+    <h2 class="temp_message">Hier ist eine kleine Überraschung für dich!<br><i>Kiwi's Geheimversteck...</i></h2>
+    <div class="container">
+      <div class="window">
+        <div class="mountain-1"></div>
+        <div class="mountain-2"></div>
+        <div class="kitty">
+          <div class="ear"></div>
+        </div>
+        <div class="moon"></div>
+        <div class="star"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById('backBtn').addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
+  </script>
+</html>

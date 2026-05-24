@@ -610,6 +610,14 @@ body {
   vertical-align: bottom;
 }
 
+#catBtn:hover {
+  border: none;
+  background: none;
+  padding: 0;
+  pointer-events: all;
+  cursor: help;
+}
+
 .cat {
   height: 160px;
   width: auto;
@@ -631,6 +639,10 @@ body {
   height: 150px;
   width: auto;
   display: block;
+}
+
+.temp_message {
+  font-size: 2rem;
 }
 }
 

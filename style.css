@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crafty+Girls&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
   --background-color: linear-gradient(to top, #010329, #000005);
   --vase-color: linear-gradient(to left, #142544, #1a9092);
@@ -1281,6 +1284,29 @@ body {
 }
 
 .back-btn.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.temp_message {
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-family: "Crafty Girls", cursive;
+  background: transparent;
+  color: #fff;
+  font-size: 2.5rem;
+  letter-spacing: 0.2em;
+  padding: 0.8rem 2.5rem;
+  border-radius: 4px;
+  transition: background 0.3s ease, opacity 0.5s ease;
+}
+
+.temp_message.visible {
   opacity: 1;
   pointer-events: all;
 }

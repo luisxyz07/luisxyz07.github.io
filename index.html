@@ -28,8 +28,9 @@
       <div id="stars3"></div>
     </div>
 
-    <button class="start-btn" id="startBtn">What's that?</button>
+    <button class="start-btn" id="startBtn">Was ist das?</button>
     <button class="back-btn" id="backBtn">&#8592;</button>
+    <h2 class="temp_message">Gute Besserung</h2>
     <div class="frame">
       <div class="flower">
         <div class="container container-1">
@@ -84,10 +85,12 @@
     const btn = document.getElementById('startBtn');
     const frame = document.querySelector('.frame');
     const backBtn = document.getElementById('backBtn');
+    const tempMessage = document.querySelector('.temp_message');
 
     btn.addEventListener('click', () => {
       btn.classList.add('hidden');
       frame.classList.add('visible');
+      tempMessage.classList.add('visible');
       frame.classList.add('started');
     });
 
@@ -97,6 +100,7 @@
     frame.classList.remove('started');
     backBtn.classList.remove('visible');
     btn.classList.remove('hidden');
+    tempMessage.classList.remove('visible');
 
     // force animation reset by briefly removing and re-adding started
     // a tiny timeout lets the browser register the class removal

@@ -3,22 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Worlds</title>
+<title>Home</title>
 
-<!-- Web App Manifest (primary PWA config) -->
-<link rel="manifest" href="/manifest.webmanifest">
-
-<!-- Theme color (Chrome, Firefox, Edge, Android) -->
-<meta name="theme-color" content="#000000">
-
-<!-- Safari / iOS Web App -->
+<!-- iOS web-app / PWA behavior -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Worlds">
-<link rel="apple-touch-icon" href="/images/icon.png">
-
-<!-- Standard favicon -->
-<link rel="icon" type="image/x-icon" href="/images/icon.ico">
+<meta name="apple-mobile-web-app-title" content="Home">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2b1055">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,8 +29,12 @@
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-  html,body{
+  html{
     height:100%;
+    background:var(--dusk-top); /* prevents white flash if viewport height rounds oddly */
+  }
+
+  body{
     margin:0;
     overflow:hidden; /* stop iOS rubber-band scroll */
     overscroll-behavior:none;
@@ -51,6 +47,8 @@
     display:flex;
     flex-direction:column;
     justify-content:space-between;
+    min-height:100vh;
+    min-height:-webkit-fill-available;
     min-height:100dvh;
     padding:
       calc(env(safe-area-inset-top) + 28px)
@@ -190,11 +188,6 @@
     box-shadow:0 8px 24px rgba(255,111,97,0.35);
   }
 
-  .btn--night{
-    background:linear-gradient(135deg, rgba(76, 0, 255, 0.95), rgba(0, 68, 255, 0.95));
-    box-shadow:0 8px 24px rgba(5, 0, 68, 0.35);
-  }
-
   .btn--secondary{
     background:rgba(255,246,234,0.12);
     border:1px solid rgba(255,246,234,0.4);
@@ -221,7 +214,7 @@
 
   <header>
     <h1>Golden Hour</h1>
-    <p class="tagline">Choose a destination</p>
+    <p class="tagline">Wherever you're headed, start here.</p>
   </header>
 
   <nav class="actions">

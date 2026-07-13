@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Flowers</title>
+
+    <!-- Safari / iOS Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Flowers">
+
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/icon.ico">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper" id="stars-wrapper">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+    </div>
+
+    <button class="start-btn" id="startBtn">Was ist das?</button>
+    <button class="back-btn" id="backBtn">&#8592;</button>
+    <h2 class="temp_message"></h2>
+    <div class="frame">
+      <div class="flower">
+        <div class="container container-1">
+          <div class="stick"></div>
+          <div class="leaf-wrap">
+            <div class="leaf leaf-1"></div>
+            <div class="leaf leaf-2"></div>
+            <div class="leaf leaf-3"></div>
+            <div class="leaf leaf-4"></div>
+            <div class="leaf leaf-5"></div>
+            <div class="leaf leaf-6"></div>
+            <div class="leaf leaf-7"></div>
+            <div class="leaf leaf-8 fall-down-yellow"></div>
+          </div>
+        </div>
+        <div class="container container-2">
+          <div class="stick"></div>
+          <div class="leaf-wrap">
+            <div class="leaf leaf-1"></div>
+            <div class="leaf leaf-2"></div>
+            <div class="leaf leaf-3"></div>
+            <div class="leaf leaf-4"></div>
+            <div class="leaf leaf-5"></div>
+            <div class="leaf leaf-6"></div>
+            <div class="leaf leaf-7"></div>
+            <div class="leaf leaf-8 fall-down-pink"></div>
+          </div>
+        </div>
+        <div class="container container-3">
+          <div class="stick"></div>
+          <div class="leaf-wrap">
+            <div class="leaf leaf-1"></div>
+            <div class="leaf leaf-2"></div>
+            <div class="leaf leaf-3"></div>
+            <div class="leaf leaf-4"></div>
+            <div class="leaf leaf-5"></div>
+            <div class="leaf leaf-6"></div>
+            <div class="leaf leaf-7"></div>
+            <div class="leaf leaf-8 fall-down-purple"></div>
+          </div>
+        </div>
+        <div class="flower-vase"></div>
+      </div>
+
+      <div class="catc">
+        <a href="cats.html" id="catBtn" style="border: none; background: none; padding: 0;">
+            <img class="cat" src="images/cat2.png" />
+        </a>
+      </div>
+    </div>
+  </body>
+  <script>
+    // Start button
+    const btn = document.getElementById('startBtn');
+    const frame = document.querySelector('.frame');
+    const backBtn = document.getElementById('backBtn');
+    const tempMessage = document.querySelector('.temp_message');
+
+    btn.addEventListener('click', () => {
+      btn.classList.add('hidden');
+      frame.classList.add('visible');
+      tempMessage.classList.add('visible');
+      frame.classList.add('started');
+    });
+
+    backBtn.addEventListener('click', () => {
+    // hide frame and back button, show start button
+    frame.classList.remove('visible');
+    frame.classList.remove('started');
+    backBtn.classList.remove('visible');
+    btn.classList.remove('hidden');
+    tempMessage.classList.remove('visible');
+
+    // force animation reset by briefly removing and re-adding started
+    // a tiny timeout lets the browser register the class removal
+    void frame.offsetWidth;
+    });
+
+    // stars scaling
+    function scaleStars() {
+      const wrapper = document.querySelector('.wrapper');
+      const scaleX = window.innerWidth / 2000;
+      const scaleY = window.innerHeight / 2000;
+      const scale = Math.max(scaleX, scaleY);
+      wrapper.style.transform = scale > 1 ? `scale(${scale})` : '';
+    }
+    scaleStars();
+    window.addEventListener('resize', scaleStars);
+  </script>
+</html>

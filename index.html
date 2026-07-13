@@ -1,123 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Flowers</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Worlds</title>
 
-    <!-- Web App Manifest (primary PWA config) -->
-    <link rel="manifest" href="/manifest.webmanifest">
+<!-- Web App Manifest (primary PWA config) -->
+<link rel="manifest" href="/manifest.webmanifest">
 
-    <!-- Theme color (Chrome, Firefox, Edge, Android) -->
-    <meta name="theme-color" content="#000000">
+<!-- Theme color (Chrome, Firefox, Edge, Android) -->
+<meta name="theme-color" content="#000000">
 
-    <!-- Safari / iOS Web App -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Flowers">
-    <link rel="apple-touch-icon" href="/images/icon.png">
+<!-- Safari / iOS Web App -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Worlds">
+<link rel="apple-touch-icon" href="/images/icon.png">
 
-    <!-- Standard favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/icon.ico">
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="wrapper" id="stars-wrapper">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-    </div>
+<!-- Standard favicon -->
+<link rel="icon" type="image/x-icon" href="/images/icon.ico">
 
-    <button class="start-btn" id="startBtn">Was ist das?</button>
-    <button class="back-btn" id="backBtn">&#8592;</button>
-    <h2 class="temp_message"></h2>
-    <div class="frame">
-      <div class="flower">
-        <div class="container container-1">
-          <div class="stick"></div>
-          <div class="leaf-wrap">
-            <div class="leaf leaf-1"></div>
-            <div class="leaf leaf-2"></div>
-            <div class="leaf leaf-3"></div>
-            <div class="leaf leaf-4"></div>
-            <div class="leaf leaf-5"></div>
-            <div class="leaf leaf-6"></div>
-            <div class="leaf leaf-7"></div>
-            <div class="leaf leaf-8 fall-down-yellow"></div>
-          </div>
-        </div>
-        <div class="container container-2">
-          <div class="stick"></div>
-          <div class="leaf-wrap">
-            <div class="leaf leaf-1"></div>
-            <div class="leaf leaf-2"></div>
-            <div class="leaf leaf-3"></div>
-            <div class="leaf leaf-4"></div>
-            <div class="leaf leaf-5"></div>
-            <div class="leaf leaf-6"></div>
-            <div class="leaf leaf-7"></div>
-            <div class="leaf leaf-8 fall-down-pink"></div>
-          </div>
-        </div>
-        <div class="container container-3">
-          <div class="stick"></div>
-          <div class="leaf-wrap">
-            <div class="leaf leaf-1"></div>
-            <div class="leaf leaf-2"></div>
-            <div class="leaf leaf-3"></div>
-            <div class="leaf leaf-4"></div>
-            <div class="leaf leaf-5"></div>
-            <div class="leaf leaf-6"></div>
-            <div class="leaf leaf-7"></div>
-            <div class="leaf leaf-8 fall-down-purple"></div>
-          </div>
-        </div>
-        <div class="flower-vase"></div>
-      </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-      <div class="catc">
-        <a href="cats.html" id="catBtn" style="border: none; background: none; padding: 0;">
-            <img class="cat" src="images/cat2.png" />
-        </a>
-      </div>
-    </div>
-  </body>
-  <script>
-    // Start button
-    const btn = document.getElementById('startBtn');
-    const frame = document.querySelector('.frame');
-    const backBtn = document.getElementById('backBtn');
-    const tempMessage = document.querySelector('.temp_message');
+<style>
+  :root{
+    --dusk-top:#1b0f3a;
+    --dusk-mid:#5c2a6b;
+    --coral:#ff6f61;
+    --amber:#ffb347;
+    --glow:#ffe6a7;
+    --cream:#fff6ea;
+    --ink:rgba(27,15,58,0.85);
+  }
 
-    btn.addEventListener('click', () => {
-      btn.classList.add('hidden');
-      frame.classList.add('visible');
-      tempMessage.classList.add('visible');
-      frame.classList.add('started');
-    });
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-    backBtn.addEventListener('click', () => {
-    // hide frame and back button, show start button
-    frame.classList.remove('visible');
-    frame.classList.remove('started');
-    backBtn.classList.remove('visible');
-    btn.classList.remove('hidden');
-    tempMessage.classList.remove('visible');
+  html,body{
+    height:100%;
+    margin:0;
+    overflow:hidden; /* stop iOS rubber-band scroll */
+    overscroll-behavior:none;
+  }
 
-    // force animation reset by briefly removing and re-adding started
-    // a tiny timeout lets the browser register the class removal
-    void frame.offsetWidth;
-    });
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--cream);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:100dvh;
+    padding:
+      calc(env(safe-area-inset-top) + 28px)
+      max(24px, env(safe-area-inset-right))
+      calc(env(safe-area-inset-bottom) + 28px)
+      max(24px, env(safe-area-inset-left));
+    background:linear-gradient(
+      180deg,
+      var(--dusk-top) 0%,
+      var(--dusk-mid) 38%,
+      var(--coral) 68%,
+      var(--amber) 100%
+    );
+    background-size:100% 220%;
+    animation:skyDrift 22s ease-in-out infinite alternate;
+  }
 
-    // stars scaling
-    function scaleStars() {
-      const wrapper = document.querySelector('.wrapper');
-      const scaleX = window.innerWidth / 2000;
-      const scaleY = window.innerHeight / 2000;
-      const scale = Math.max(scaleX, scaleY);
-      wrapper.style.transform = scale > 1 ? `scale(${scale})` : '';
+  @keyframes skyDrift{
+    0%   { background-position:0% 0%; }
+    100% { background-position:0% 100%; }
+  }
+
+  /* Sun */
+  .sun{
+    position:absolute;
+    left:50%;
+    top:64%;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle at 50% 45%, var(--glow) 0%, var(--amber) 55%, rgba(255,111,97,0) 75%);
+    box-shadow:0 0 70px 20px rgba(255,203,127,0.55);
+    animation:sunPulse 6s ease-in-out infinite;
+  }
+  @keyframes sunPulse{
+    0%,100%{ opacity:0.9; transform:translate(-50%,-50%) scale(1); }
+    50%    { opacity:1;   transform:translate(-50%,-50%) scale(1.06); }
+  }
+
+  /* Horizon line + water shimmer */
+  .horizon{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:34%;
+    background:linear-gradient(180deg, rgba(43,16,85,0) 0%, rgba(43,16,85,0.55) 100%);
+    overflow:hidden;
+  }
+  .horizon::before{
+    content:"";
+    position:absolute;
+    left:-10%; right:-10%; top:18%;
+    height:2px;
+    background:rgba(255,230,167,0.35);
+    filter:blur(1px);
+  }
+
+  /* Drifting cloud silhouettes */
+  .cloud{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(27,15,58,0.35);
+    filter:blur(2px);
+  }
+  .cloud--a{ width:180px; height:34px; top:22%; left:-20%; animation:drift 38s linear infinite; }
+  .cloud--b{ width:130px; height:26px; top:33%; left:-30%; animation:drift 52s linear infinite; opacity:0.7; }
+  .cloud--c{ width:100px; height:20px; top:16%; left:-15%; animation:drift 46s linear infinite reverse; opacity:0.5; }
+
+  @keyframes drift{
+    from{ transform:translateX(0); }
+    to  { transform:translateX(140vw); }
+  }
+
+  /* Birds — small, subtle motion */
+  .bird{ position:absolute; font-size:14px; opacity:0.55; animation:drift 30s linear infinite; }
+  .bird--1{ top:14%; left:-5%; animation-duration:26s; }
+  .bird--2{ top:18%; left:-8%; animation-duration:33s; animation-delay:4s; }
+
+  header{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    margin-top:8vh;
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(2.4rem, 9vw, 3.2rem);
+    letter-spacing:-0.01em;
+    margin:0 0 10px;
+    text-shadow:0 2px 20px rgba(27,15,58,0.35);
+  }
+
+  p.tagline{
+    font-size:1rem;
+    font-weight:400;
+    margin:0;
+    color:var(--cream);
+    opacity:0.85;
+    letter-spacing:0.01em;
+  }
+
+  nav.actions{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    width:100%;
+    max-width:420px;
+    margin:0 auto;
+  }
+
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--cream);
+    padding:17px 24px;
+    min-height:52px; /* Apple HIG touch target */
+    border-radius:16px;
+    letter-spacing:0.01em;
+    transition:transform 0.15s ease, background 0.15s ease;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+
+  .btn:active{ transform:scale(0.97); }
+
+  .btn--primary{
+    background:linear-gradient(135deg, rgba(255,179,71,0.95), rgba(255,111,97,0.95));
+    box-shadow:0 8px 24px rgba(255,111,97,0.35);
+  }
+
+  .btn--night{
+    background:linear-gradient(135deg, rgba(76, 0, 255, 0.95), rgba(0, 68, 255, 0.95));
+    box-shadow:0 8px 24px rgba(5, 0, 68, 0.35);
+  }
+
+  .btn--secondary{
+    background:rgba(255,246,234,0.12);
+    border:1px solid rgba(255,246,234,0.4);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    body, .sun, .cloud--a, .cloud--b, .cloud--c, .bird--1, .bird--2{
+      animation:none !important;
     }
-    scaleStars();
-    window.addEventListener('resize', scaleStars);
-  </script>
+  }
+</style>
+</head>
+<body>
+
+  <div class="sun"></div>
+  <div class="cloud cloud--a"></div>
+  <div class="cloud cloud--b"></div>
+  <div class="cloud cloud--c"></div>
+  <div class="bird bird--1">〜</div>
+  <div class="bird bird--2">〜</div>
+  <div class="horizon"></div>
+
+  <header>
+    <h1>Golden Hour</h1>
+    <p class="tagline">Choose a destination</p>
+  </header>
+
+  <nav class="actions">
+    <a class="btn btn--primary" href="under_quiet_stars/index.html">Under Quiet Stars</a>
+    <a class="btn btn--primary" href="nights_embrace/index.html">Night's Embrace (new)</a>
+  </nav>
+
+</body>
 </html>

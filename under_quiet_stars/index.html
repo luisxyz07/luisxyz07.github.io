@@ -22,7 +22,7 @@
     </div>
 
     <button class="start-btn" id="startBtn">Was ist das?</button>
-    <button class="back-btn" id="backBtn">&#8592;</button>
+    <button class="back-btn" id="backBtn">Zurück</button>
     <h2 class="temp_message"></h2>
     <div class="frame">
       <div class="flower">
@@ -90,16 +90,22 @@
     });
 
     backBtn.addEventListener('click', () => {
-    // hide frame and back button, show start button
-    frame.classList.remove('visible');
-    frame.classList.remove('started');
-    backBtn.classList.remove('visible');
-    btn.classList.remove('hidden');
-    tempMessage.classList.remove('visible');
+      if (frame.classList.contains('started')) {
+        // hide frame and back button, show start button
+        frame.classList.remove('visible');
+        frame.classList.remove('started');
+        backBtn.classList.remove('visible');
+        btn.classList.remove('hidden');
+        tempMessage.classList.remove('visible');
 
-    // force animation reset by briefly removing and re-adding started
-    // a tiny timeout lets the browser register the class removal
-    void frame.offsetWidth;
+        // force animation reset by briefly removing and re-adding started
+        // a tiny timeout lets the browser register the class removal
+        void frame.offsetWidth;
+      }
+      else {
+        window.location.href = '../index.html';
+      }
+      
     });
 
     // stars scaling

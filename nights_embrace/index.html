@@ -260,7 +260,7 @@
     top: 22%;
     left: 50%;
     transform: translateX(-50%);
-    width: min(78vw, 460px);
+    width: min(78vw, 480px);
     height: 30vh;
     z-index: 5;
     pointer-events: none;
@@ -279,7 +279,7 @@
     stroke-linecap: round;
     stroke-dasharray: 400;
     stroke-dashoffset: 400;
-    animation: drawLine 4.6s ease-out forwards;
+    animation: drawLine 2.6s ease-out forwards;
     animation-delay: 0.4s;
   }
 
@@ -322,11 +322,35 @@
     animation-delay: 2.2s;
     text-transform: uppercase;
   }
+
+  .back-btn {
+    position: fixed;
+    top: 3.5rem;
+    left: 1rem;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 200;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    opacity: 1;
+    pointer-events: all;
+    transition: background 0.3s ease, opacity 0.5s ease;
+  }
+
+  .back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
 </style>
 </head>
 <body>
-
 <div class="sky">
+  <button class="back-btn" id="backBtn">Zurück</button>
   <div class="mountains">
     <div class="mountain-1"></div>
     <div class="mountain-2"></div>
@@ -452,6 +476,12 @@ function setVH() {
 setVH();
 window.addEventListener('resize', setVH);
 window.addEventListener('orientationchange', setVH);
+
+const backBtn = document.getElementById('backBtn');
+
+backBtn.addEventListener('click', () => {
+  window.location.href = '../index.html';
+});
 </script>
 </body>
 </html>

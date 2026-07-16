@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Worlds</title>
+<title>Flowers</title>
 
 <!-- Web App Manifest (primary PWA config) -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -37,32 +37,14 @@
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-  html{
+  html,body{
     height:100%;
-    background:var(--dusk-top); /* prevents white flash if viewport height rounds oddly */
-  }
-
-  body{
     margin:0;
     overflow:hidden; /* stop iOS rubber-band scroll */
     overscroll-behavior:none;
   }
 
-  body{
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-    color:var(--cream);
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    min-height:100vh;
-    min-height:-webkit-fill-available;
-    min-height:100dvh;
-    padding:
-      calc(env(safe-area-inset-top) + 28px)
-      max(24px, env(safe-area-inset-right))
-      calc(env(safe-area-inset-bottom) + 28px)
-      max(24px, env(safe-area-inset-left));
+  html{
     background:linear-gradient(
       180deg,
       var(--dusk-top) 0%,
@@ -72,6 +54,22 @@
     );
     background-size:100% 220%;
     animation:skyDrift 22s ease-in-out infinite alternate;
+  }
+
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--cream);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:100dvh;
+    padding:
+      calc(env(safe-area-inset-top) + 28px)
+      max(24px, env(safe-area-inset-right))
+      calc(env(safe-area-inset-bottom) + 28px)
+      max(24px, env(safe-area-inset-left));
+    background:transparent;
   }
 
   @keyframes skyDrift{
@@ -196,6 +194,11 @@
     box-shadow:0 8px 24px rgba(255,111,97,0.35);
   }
 
+  .btn--night{
+    background:linear-gradient(135deg, rgba(76, 0, 255, 0.95), rgba(0, 68, 255, 0.95));
+    box-shadow:0 8px 24px rgba(5, 0, 68, 0.35);
+  }
+
   .btn--secondary{
     background:rgba(255,246,234,0.12);
     border:1px solid rgba(255,246,234,0.4);
@@ -204,7 +207,7 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    body, .sun, .cloud--a, .cloud--b, .cloud--c, .bird--1, .bird--2{
+    html, .sun, .cloud--a, .cloud--b, .cloud--c, .bird--1, .bird--2{
       animation:none !important;
     }
   }
@@ -222,12 +225,12 @@
 
   <header>
     <h1>Golden Hour</h1>
-    <p class="tagline">Wherever you're headed, start here.</p>
+    <p class="tagline">Wohin soll es gehen?</p>
   </header>
 
   <nav class="actions">
-    <a class="btn btn--primary" href="under_quiet_stars/index.html">Under Quiet Stars</a>
-    <a class="btn btn--primary" href="nights_embrace/index.html">Night's Embrace (new)</a>
+    <a class="btn btn--primary" href="under_quiet_stars/index.html">Blumen</a>
+    <a class="btn btn--secondary" href="nights_embrace/index.html">Sternennacht</a>
   </nav>
 
 </body>

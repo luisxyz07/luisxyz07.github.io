@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Alles Gute! 🎂</title>
+<meta name="theme-color" content="#0a0008">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  :root {
+    --safe-top:    env(safe-area-inset-top,    0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background: #0a0008;
+    color: #fff;
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+
+  /* ── Background ──────────────────────────────────────────────────────────── */
+  .bg {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50%  0%,  rgba(251,146,60,.22)  0%, transparent 60%),
+      radial-gradient(ellipse at 18%  80%, rgba(244,114,182,.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 82%  70%, rgba(251,191,36,.14)  0%, transparent 50%),
+      linear-gradient(168deg, #0a0008 0%, #14000e 50%, #1c0012 100%);
+    z-index: 0;
+  }
+
+  /* ── Stars ───────────────────────────────────────────────────────────────── */
+  .stars-layer { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    animation: twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: var(--op, .45); }
+    50%     { opacity: calc(var(--op, .45) * .12); }
+  }
+
+  /* ── Confetti ────────────────────────────────────────────────────────────── */
+  .confetti-layer { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+  .confetti-piece {
+    position: absolute;
+    top: -20px;
+    opacity: 0;
+    animation: confetti-fall linear infinite;
+  }
+  @keyframes confetti-fall {
+    0%   { transform: translateY(0)     translateX(0)                    rotate(0deg);   opacity: 1; }
+    25%  { transform: translateY(25vh)  translateX(var(--sw, 18px))      rotate(200deg); }
+    50%  { transform: translateY(50vh)  translateX(0)                    rotate(400deg); }
+    75%  { transform: translateY(75vh)  translateX(var(--sw, 18px))      rotate(580deg); }
+    100% { transform: translateY(112vh) translateX(0)                    rotate(720deg); opacity: .35; }
+  }
+
+  /* ── Floating emoji ──────────────────────────────────────────────────────── */
+  .float-emoji {
+    position: fixed;
+    opacity: 0;
+    z-index: 3;
+    pointer-events: none;
+    animation: float-rise linear infinite;
+  }
+  @keyframes float-rise {
+    0%   { transform: translateY(0) scale(.5);  opacity: 0; }
+    12%  { opacity: .85; transform: translateY(-8vh) scale(1); }
+    80%  { opacity: .35; }
+    100% { transform: translateY(-65vh) scale(.65); opacity: 0; }
+  }
+
+  /* ── Scrollable content ──────────────────────────────────────────────────── */
+  .scroll-area {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:
+      calc(var(--safe-top) + 72px)
+      24px
+      calc(var(--safe-bottom) + 40px);
+  }
+
+  /* ── Card ────────────────────────────────────────────────────────────────── */
+  .card {
+    width: 100%;
+    max-width: 385px;
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.13);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-radius: 30px;
+    padding: 38px 28px 34px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Gold shimmer top line */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,.55), transparent);
+  }
+
+  .card-emoji  { font-size: 3.6rem; line-height: 1; display: block; margin-bottom: 18px; }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.75rem, 7.5vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -.01em;
+    background: linear-gradient(135deg, #fef3c7, #fde68a, #f59e0b, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 6px;
+  }
+
+  .card-date {
+    font-size: .68rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+    margin-bottom: 22px;
+  }
+
+  .divider { color: rgba(251,191,36,.48); font-size: .68rem; letter-spacing: .42em; margin-bottom: 22px; }
+
+  .message {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.12rem;
+    line-height: 1.9;
+    color: rgba(255,255,255,.82);
+    letter-spacing: .02em;
+  }
+  .message strong { font-weight: 400; color: rgba(253,224,71,.92); }
+
+  .signature {
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(255,255,255,.5);
+    letter-spacing: .06em;
+  }
+
+  /* ── Back button ─────────────────────────────────────────────────────────── */
+  .back-btn {
+    position: fixed;
+    top: calc(var(--safe-top) + 16px);
+    left: 16px;
+    z-index: 20;
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,.22);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .06em;
+    padding: 9px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .2s ease;
+  }
+  .back-btn:hover  { background: rgba(255,255,255,.18); }
+  .back-btn:active { background: rgba(255,255,255,.26); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .star, .confetti-piece, .float-emoji { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="stars-layer" id="starsLayer"></div>
+<div class="confetti-layer" id="confettiLayer"></div>
+
+<button class="back-btn" onclick="window.location.href='../index.html'">← Zurück</button>
+
+<div class="scroll-area">
+  <div class="card">
+    <span class="card-emoji">🎂</span>
+    <h1 class="card-title">Alles Gute<br>zum Geburtstag!</h1>
+    <p class="card-date">6. September</p>
+    <div class="divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="message">
+      <strong>Mein Schatz,</strong><br><br>
+      heute ist dein Tag –<br>
+      und jedes Jahr werde ich wieder<br>
+      staunen, wie wunderschön die Welt<br>
+      mit dir darin ist.<br><br>
+      Du bist das Schönste,<br>
+      was mir je passiert ist.<br><br>
+      Ich liebe dich –<br>
+      jetzt, morgen und für immer. ✨
+    </div>
+    <p class="signature">In Liebe, für immer dein ❤️</p>
+  </div>
+</div>
+
+<script>
+// ── Stars ────────────────────────────────────────────────────────────────────
+(function () {
+  const layer = document.getElementById('starsLayer');
+  const frag  = document.createDocumentFragment();
+  for (let i = 0; i < 110; i++) {
+    const el   = document.createElement('div');
+    const size = Math.random() < .7 ? 1 : 1.5;
+    const op   = (.18 + Math.random() * .45).toFixed(2);
+    el.className = 'star';
+    el.style.cssText =
+      'left:' + (Math.random()*100).toFixed(1) + '%;' +
+      'top:'  + (Math.random()*100).toFixed(1) + '%;' +
+      'width:' + size + 'px;height:' + size + 'px;' +
+      '--op:' + op + ';' +
+      'animation-duration:' + (2 + Math.random()*4).toFixed(1) + 's;' +
+      'animation-delay:-'   + (Math.random()*5).toFixed(1)   + 's;';
+    frag.appendChild(el);
+  }
+  layer.appendChild(frag);
+}());
+
+// ── Confetti ─────────────────────────────────────────────────────────────────
+(function () {
+  const colours = ['#fde047','#fb923c','#f472b6','#c084fc','#34d399','#60a5fa','#f87171','#fbbf24'];
+  const layer   = document.getElementById('confettiLayer');
+  const frag    = document.createDocumentFragment();
+  for (let i = 0; i < 62; i++) {
+    const el     = document.createElement('div');
+    const size   = (5 + Math.random() * 8).toFixed(1);
+    const circle = Math.random() > .45;
+    el.className = 'confetti-piece';
+    el.style.cssText =
+      'left:'   + (Math.random()*100).toFixed(1) + '%;' +
+      'width:'  + size + 'px;height:' + size + 'px;' +
+      'background:' + colours[Math.floor(Math.random()*colours.length)] + ';' +
+      'border-radius:' + (circle ? '50%' : '2px') + ';' +
+      '--sw:'   + (Math.random()*44-22).toFixed(1) + 'px;' +
+      'animation-duration:' + (3.2 + Math.random()*4.5).toFixed(1) + 's;' +
+      'animation-delay:'    + (Math.random()*4.5).toFixed(1) + 's;';
+    frag.appendChild(el);
+  }
+  layer.appendChild(frag);
+}());
+
+// ── Floating emojis ──────────────────────────────────────────────────────────
+(function () {
+  const emojis = ['❤️','🌸','✨','💫','🌟','🥂'];
+  for (let i = 0; i < 9; i++) {
+    const el = document.createElement('div');
+    el.className  = 'float-emoji';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.cssText =
+      'left:'   + (Math.random()*88+6).toFixed(1) + '%;' +
+      'bottom:' + (Math.random()*18).toFixed(1) + '%;' +
+      'font-size:' + (1 + Math.random()*.9).toFixed(1) + 'rem;' +
+      'animation-duration:' + (6 + Math.random()*6).toFixed(1) + 's;' +
+      'animation-delay:'    + (Math.random()*6.5).toFixed(1) + 's;';
+    document.body.appendChild(el);
+  }
+}());
+</script>
+</body>
+</html>

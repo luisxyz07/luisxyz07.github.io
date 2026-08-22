@@ -1,236 +1,401 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Flowers</title>
+<title>Deine Welten</title>
 
-<!-- Web App Manifest (primary PWA config) -->
+<!-- PWA -->
 <link rel="manifest" href="/manifest.webmanifest">
-
-<!-- Theme color (Chrome, Firefox, Edge, Android) -->
-<meta name="theme-color" content="#000000">
-
-<!-- Safari / iOS Web App -->
+<meta name="theme-color" content="#020010">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Worlds">
+<meta name="apple-mobile-web-app-title" content="Welten">
 <link rel="apple-touch-icon" href="/images/icon.png">
+<link rel="icon" href="/images/logo.ico">
 
-<!-- Standard favicon -->
-<link rel="icon" type="image/x-icon" href="/images/icon.ico">
-
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-  :root{
-    --dusk-top:#1b0f3a;
-    --dusk-mid:#5c2a6b;
-    --coral:#ff6f61;
-    --amber:#ffb347;
-    --glow:#ffe6a7;
-    --cream:#fff6ea;
-    --ink:rgba(27,15,58,0.85);
+  :root {
+    --safe-top:    env(safe-area-inset-top,    0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-  html,body{
-    height:100%;
-    margin:0;
-    overflow:hidden; /* stop iOS rubber-band scroll */
-    overscroll-behavior:none;
+  *, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  html{
-    background:linear-gradient(
-      180deg,
-      var(--dusk-top) 0%,
-      var(--dusk-mid) 38%,
-      var(--coral) 68%,
-      var(--amber) 100%
-    );
-    background-size:100% 220%;
-    animation:skyDrift 22s ease-in-out infinite alternate;
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+    background: #020010;
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
-  body{
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-    color:var(--cream);
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    min-height:100dvh;
+  /* ── Space background ───────────────────────────────────────────────────── */
+  .space-bg {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 35%, rgba(76,29,149,.28)  0%, transparent 55%),
+      radial-gradient(ellipse at 85% 12%, rgba(29,78,216,.18)  0%, transparent 48%),
+      radial-gradient(ellipse at 60% 85%, rgba(190,24,93,.14)  0%, transparent 52%),
+      linear-gradient(168deg, #020010 0%, #07001e 45%, #0b0029 100%);
+    z-index: 0;
+  }
+
+  /* ── Nebula blobs ───────────────────────────────────────────────────────── */
+  .nebula {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(90px);
+  }
+
+  /* ── Stars ──────────────────────────────────────────────────────────────── */
+  .stars-layer { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    animation: star-twinkle ease-in-out infinite;
+  }
+  @keyframes star-twinkle {
+    0%,100% { opacity: var(--op, .7); transform: scale(1); }
+    50%     { opacity: calc(var(--op, .7) * .12); transform: scale(.55); }
+  }
+
+  /* ── Screen ─────────────────────────────────────────────────────────────── */
+  .screen {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     padding:
-      calc(env(safe-area-inset-top) + 28px)
-      max(24px, env(safe-area-inset-right))
-      max(24px, env(safe-area-inset-left));
-    background:transparent;
+      calc(var(--safe-top)  + 40px)
+      20px
+      calc(var(--safe-bottom) + 20px);
+    min-height: 100dvh;
   }
 
-  @keyframes skyDrift{
-    0%   { background-position:0% 0%; }
-    100% { background-position:0% 100%; }
+  /* ── Header ─────────────────────────────────────────────────────────────── */
+  .eyebrow {
+    font-size: .62rem;
+    font-weight: 500;
+    letter-spacing: .38em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.32);
+    margin-bottom: 10px;
+  }
+  .site-title {
+    font-weight: 300;
+    font-size: clamp(2.6rem, 11vw, 3.8rem);
+    letter-spacing: -.02em;
+    line-height: 1;
+    margin: 0;
+    background: linear-gradient(135deg, #fff 0%, #d8b4fe 52%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 28px rgba(167,139,250,.55));
+  }
+  .site-sub {
+    font-style: italic;
+    font-size: clamp(.95rem, 4vw, 1.15rem);
+    color: rgba(255,255,255,.38);
+    margin-top: 8px;
+    letter-spacing: .07em;
   }
 
-  /* Sun */
-  .sun{
-    position:absolute;
-    left:50%;
-    top:64%;
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle at 50% 45%, var(--glow) 0%, var(--amber) 55%, rgba(255,111,97,0) 75%);
-    box-shadow:0 0 70px 20px rgba(255,203,127,0.55);
-    animation:sunPulse 6s ease-in-out infinite;
+  /* ── Portal grid ─────────────────────────────────────────────────────────── */
+  .portals-container {
+    width: 100%;
+    max-width: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
   }
-  @keyframes sunPulse{
-    0%,100%{ opacity:0.9; transform:translate(-50%,-50%) scale(1); }
-    50%    { opacity:1;   transform:translate(-50%,-50%) scale(1.06); }
+  .portals-row {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+    justify-content: center;
   }
 
-  /* Horizon line + water shimmer */
-  .horizon{
-    position:absolute;
-    left:0; right:0; bottom:0;
-    height:34%;
-    background:linear-gradient(180deg, rgba(43,16,85,0) 0%, rgba(43,16,85,0.55) 100%);
-    overflow:hidden;
+  /* ── Portal card ─────────────────────────────────────────────────────────── */
+  .portal {
+    flex: 1;
+    max-width: 178px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 10px;
+    border-radius: 26px;
+    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(255,255,255,.025);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
   }
-  .horizon::before{
-    content:"";
-    position:absolute;
-    left:-10%; right:-10%; top:18%;
-    height:2px;
-    background:rgba(255,230,167,0.35);
-    filter:blur(1px);
+  .portal:active { transform: scale(.93); }
+  .portal:hover  { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.05); }
+  .portal.disabled { pointer-events: none; opacity: .32; }
+
+  /* ── Orb ─────────────────────────────────────────────────────────────────── */
+  .orb-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  .orb {
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
   }
-
-  /* Drifting cloud silhouettes */
-  .cloud{
-    position:absolute;
-    border-radius:50%;
-    background:rgba(27,15,58,0.35);
-    filter:blur(2px);
+  /* Specular highlight */
+  .orb::before {
+    content: '';
+    position: absolute;
+    width: 36%; height: 26%;
+    background: rgba(255,255,255,.28);
+    border-radius: 50%;
+    top: 11%; left: 11%;
+    filter: blur(4px);
+    z-index: 2;
   }
-  .cloud--a{ width:180px; height:34px; top:22%; left:-20%; animation:drift 38s linear infinite; }
-  .cloud--b{ width:130px; height:26px; top:33%; left:-30%; animation:drift 52s linear infinite; opacity:0.7; }
-  .cloud--c{ width:100px; height:20px; top:16%; left:-15%; animation:drift 46s linear infinite reverse; opacity:0.5; }
-
-  @keyframes drift{
-    from{ transform:translateX(0); }
-    to  { transform:translateX(140vw); }
-  }
-
-  /* Birds — small, subtle motion */
-  .bird{ position:absolute; font-size:14px; opacity:0.55; animation:drift 30s linear infinite; }
-  .bird--1{ top:14%; left:-5%; animation-duration:26s; }
-  .bird--2{ top:18%; left:-8%; animation-duration:33s; animation-delay:4s; }
-
-  header{
-    position:relative;
-    z-index:2;
-    text-align:center;
-    margin-top:8vh;
-  }
-
-  h1{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:clamp(2.4rem, 9vw, 3.2rem);
-    letter-spacing:-0.01em;
-    margin:0 0 10px;
-    text-shadow:0 2px 20px rgba(27,15,58,0.35);
+  /* Atmospheric rim darkening */
+  .orb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, transparent 52%, rgba(0,0,0,.42) 100%);
+    z-index: 1;
   }
 
-  p.tagline{
-    font-size:1rem;
-    font-weight:400;
-    margin:0;
-    color:var(--cream);
-    opacity:0.85;
-    letter-spacing:0.01em;
+  /* ── Orbit rings ─────────────────────────────────────────────────────────── */
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.1);
+    pointer-events: none;
+    animation: ring-pulse 4s ease-in-out infinite;
+  }
+  .ring:nth-child(2) { animation-delay: -2s; }
+  @keyframes ring-pulse {
+    0%,100% { opacity: .38; transform: scale(1); }
+    50%     { opacity: .85; transform: scale(1.045); }
   }
 
-  nav.actions{
-    position:relative;
-    z-index:2;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    width:100%;
-    max-width:420px;
-    margin:0 auto;
+  /* ── Planet colour variants ───────────────────────────────────────────────── */
+
+  /* Blumenwelt – warm rose-pink */
+  .orb-flowers {
+    background: radial-gradient(circle at 34% 29%, #fdf2f8 0%, #f9a8d4 14%, #ec4899 44%, #9d174d 74%, #500028 100%);
+    box-shadow: 0 0 26px 9px rgba(236,72,153,.48), 0 0 52px 22px rgba(157,23,77,.22);
+  }
+  .ring-flowers { border-color: rgba(236,72,153,.3); }
+
+  /* Sternennacht – deep violet-indigo */
+  .orb-night {
+    background: radial-gradient(circle at 34% 29%, #ede9fe 0%, #a78bfa 14%, #7c3aed 44%, #3b0764 76%, #0d0020 100%);
+    box-shadow: 0 0 26px 9px rgba(124,58,237,.48), 0 0 52px 22px rgba(59,7,100,.22);
+  }
+  .ring-night { border-color: rgba(139,92,246,.3); }
+
+  /* Coming soon – dark slate */
+  .orb-soon {
+    background: radial-gradient(circle at 34% 29%, #6b7280 0%, #374151 34%, #1f2937 70%, #0d1117 100%);
+    box-shadow: 0 0 12px 4px rgba(55,65,81,.22);
   }
 
-  .btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:1.05rem;
-    color:var(--cream);
-    padding:17px 24px;
-    min-height:52px; /* Apple HIG touch target */
-    border-radius:16px;
-    letter-spacing:0.01em;
-    transition:transform 0.15s ease, background 0.15s ease;
-    -webkit-user-select:none;
-    user-select:none;
+  /* Birthday – warm gold */
+  .orb-birthday {
+    background: radial-gradient(circle at 34% 29%, #fef9c3 0%, #fde047 17%, #f59e0b 46%, #b45309 77%, #451a03 100%);
+    box-shadow: 0 0 26px 9px rgba(251,191,36,.55), 0 0 52px 22px rgba(245,158,11,.3);
+  }
+  .ring-birthday { border-color: rgba(253,224,71,.36); }
+
+  /* ── Portal text ─────────────────────────────────────────────────────────── */
+  .portal-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: .04em;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .portal-desc {
+    font-size: .63rem;
+    color: rgba(255,255,255,.38);
+    text-align: center;
+    letter-spacing: .06em;
+    line-height: 1.55;
   }
 
-  .btn:active{ transform:scale(0.97); }
+  /* ── Small single portal (bottom row) ───────────────────────────────────── */
+  .portal-sm { max-width: 200px; flex: none; }
 
-  .btn--primary{
-    background:linear-gradient(135deg, rgba(255,179,71,0.95), rgba(255,111,97,0.95));
-    box-shadow:0 8px 24px rgba(255,111,97,0.35);
+  /* ── Footer ──────────────────────────────────────────────────────────────── */
+  .footer-note {
+    font-size: .58rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.17);
+    text-align: center;
   }
 
-  .btn--night{
-    background:linear-gradient(135deg, rgba(76, 0, 255, 0.95), rgba(0, 68, 255, 0.95));
-    box-shadow:0 8px 24px rgba(5, 0, 68, 0.35);
-  }
-
-  .btn--secondary{
-    background:rgba(255,246,234,0.12);
-    border:1px solid rgba(255,246,234,0.4);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    html, .sun, .cloud--a, .cloud--b, .cloud--c, .bird--1, .bird--2{
-      animation:none !important;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .star, .ring { animation: none !important; }
   }
 </style>
 </head>
 <body>
 
-  <div class="sun"></div>
-  <div class="cloud cloud--a"></div>
-  <div class="cloud cloud--b"></div>
-  <div class="cloud cloud--c"></div>
-  <div class="bird bird--1">〜</div>
-  <div class="bird bird--2">〜</div>
-  <div class="horizon"></div>
+<!-- Space background -->
+<div class="space-bg"></div>
 
-  <header>
-    <h1>Golden Hour</h1>
-    <p class="tagline">Wohin soll es gehen?</p>
+<!-- Nebula atmosphere blobs -->
+<div class="nebula" style="width:430px;height:330px;top:-90px;right:-90px;background:#5b21b6;opacity:.14;"></div>
+<div class="nebula" style="width:500px;height:400px;top:33%;left:-170px;background:#1e3a8a;opacity:.09;"></div>
+<div class="nebula" style="width:370px;height:290px;bottom:-70px;right:8%;background:#9d174d;opacity:.1;"></div>
+
+<!-- Twinkling star field (populated by JS) -->
+<div class="stars-layer" id="starsLayer"></div>
+
+<!-- ── Main content ─────────────────────────────────────────────────────────── -->
+<div class="screen">
+
+  <!-- Header -->
+  <header style="text-align:center;">
+    <div class="eyebrow">✦ &nbsp; ein universum für dich &nbsp; ✦</div>
+    <h1 class="site-title">Deine Welten</h1>
+    <p class="site-sub">Wähle eine Welt und die Reise geht los!</p>
   </header>
 
-  <nav class="actions">
-    <a class="btn btn--primary" href="under_quiet_stars/index.html">Blumen</a>
-    <a class="btn btn--secondary" href="nights_embrace/index.html">Sternennacht</a>
-  </nav>
+  <!-- World portals -->
+  <div class="portals-container">
 
+    <!-- Row 1: two main worlds -->
+    <div class="portals-row">
+
+      <!-- Blumenwelt -->
+      <a href="under_quiet_stars/index.html" class="portal">
+        <div class="orb-wrap">
+          <div class="ring ring-flowers" style="inset:-14px;"></div>
+          <div class="ring ring-flowers" style="inset:-24px;"></div>
+          <div class="orb orb-flowers" style="width:88px;height:88px;"></div>
+        </div>
+        <div class="portal-name">Blumenwelt</div>
+        <div class="portal-desc">Blumen unter<br>stillen Sternen</div>
+      </a>
+
+      <!-- Sternennacht -->
+      <a href="nights_embrace/index.html" class="portal">
+        <div class="orb-wrap">
+          <div class="ring ring-night" style="inset:-14px;"></div>
+          <div class="ring ring-night" style="inset:-24px;"></div>
+          <div class="orb orb-night" style="width:88px;height:88px;"></div>
+        </div>
+        <div class="portal-name">Sternennacht</div>
+        <div class="portal-desc">Cassiopeia am<br>nächtlichen Himmel</div>
+      </a>
+
+    </div>
+
+    <!-- Row 2: coming soon OR birthday (swapped by JS on Sept 6) -->
+    <div class="portals-row">
+
+      <!-- Coming soon (shown by default) -->
+      <div class="portal portal-sm disabled" id="portalSoon">
+        <div class="orb-wrap">
+          <div class="orb orb-soon" style="width:68px;height:68px;"></div>
+        </div>
+        <div class="portal-name" style="font-size:.92rem;opacity:.55;">Bald …</div>
+        <div class="portal-desc">Eine neue Welt<br>entsteht</div>
+      </div>
+
+      <!-- Birthday portal (hidden by default) -->
+      <a href="birthday/index.html" class="portal portal-sm" id="portalBirthday" style="display:none;flex-direction:column;align-items:center;">
+        <div class="orb-wrap">
+          <div class="ring ring-birthday" style="inset:-11px;"></div>
+          <div class="orb orb-birthday" style="width:68px;height:68px;"></div>
+        </div>
+        <div class="portal-name" style="font-size:.92rem;">🎂 Geburtstag</div>
+        <div class="portal-desc">Nur heute<br>für dich</div>
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <p class="footer-note">✦ &nbsp; Made with heart by Luis &nbsp; ✦</p>
+
+</div>
+
+<script>
+// ── Star field ──────────────────────────────────────────────────────────────
+(function () {
+  const layer = document.getElementById('starsLayer');
+  const frag  = document.createDocumentFragment();
+  const count = window.innerWidth < 500 ? 150 : 220;
+
+  for (let i = 0; i < count; i++) {
+    const el   = document.createElement('div');
+    const rand = Math.random();
+    const size = rand < .65 ? 1 : rand < .85 ? 1.5 : 2.5;
+    const op   = (.22 + Math.random() * .78).toFixed(2);
+    const dur  = (2   + Math.random() * 5 ).toFixed(1);
+    const del  = (Math.random() * 8).toFixed(1);
+
+    el.className = 'star';
+    el.style.cssText =
+      'left:'   + (Math.random() * 100).toFixed(1) + '%;' +
+      'top:'    + (Math.random() * 100).toFixed(1) + '%;' +
+      'width:'  + size + 'px;height:' + size + 'px;' +
+      '--op:'   + op + ';' +
+      'animation-duration:' + dur + 's;' +
+      'animation-delay:-'   + del + 's;' +
+      (size >= 2 ? 'box-shadow:0 0 ' + (size*3) + 'px ' + size + 'px rgba(255,255,255,' + (op*.5).toFixed(2) + ');' : '');
+
+    frag.appendChild(el);
+  }
+  layer.appendChild(frag);
+}());
+
+// ── Birthday portal gate ────────────────────────────────────────────────────
+(function () {
+  const d = new Date();
+  if (d.getMonth() === 8 && d.getDate() === 6) {   // 0-indexed → September = 8
+    document.getElementById('portalSoon').style.display    = 'none';
+    document.getElementById('portalBirthday').style.display = 'flex';
+  }
+}());
+</script>
 </body>
 </html>

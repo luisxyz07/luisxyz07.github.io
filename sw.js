@@ -1,7 +1,7 @@
 'use strict';
 const BASE = self.registration.scope;
 const PREFIX = 'welten-' + new URL(BASE).pathname + '-';
-const CACHE = PREFIX + '2026-11-13-v4';
+const CACHE = PREFIX + '2026-11-13-v5';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest',
   'assets/app.css', 'assets/app.js', 'assets/home.css', 'assets/update.js',
@@ -10,7 +10,7 @@ const ASSETS = [
   'under_quiet_stars/cats.html', 'under_quiet_stars/cat_style.css', 'under_quiet_stars/images/cat2.png',
   'nights_embrace/index.html',
   'northern_lights/index.html', 'northern_lights/style.css', 'northern_lights/aurora.js',
-  'images/icon.png', 'images/logo.ico'
+  'images/apple-touch-icon.png', 'images/flowers-icon.ico'
 ].map(asset => new URL(asset, BASE).href);
 
 self.addEventListener('install', event => {

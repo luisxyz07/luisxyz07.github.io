@@ -40,7 +40,11 @@ Für einen neuen Update-Hinweis die Variable `version` in `assets/update.js` än
 
 `index.html`, `manifest.webmanifest`, `sw.js`, `assets/`, `images/`, `under_quiet_stars/`, `nights_embrace/` und `northern_lights/` gemeinsam hochladen. Relative Pfade erlauben auch ein Unterverzeichnis. `backups/`, `docs/`, `tests/` und `tools/` müssen nicht veröffentlicht werden. Beim Abgleich mit einem vorhandenen Host entfernte Dateien ebenfalls löschen.
 
-Bei einer Veröffentlichung nach Quelländerungen die Versionskennung `CACHE` in `sw.js` erhöhen. Sobald der neue Stand vollständig gespeichert wurde, aktiviert er sich und lädt bereits geöffnete Seiten dieser App einmal neu. Alte App-Caches werden entfernt. Das vorhandene 400 × 400 px Icon bleibt erhalten und ist im Manifest mit seiner tatsächlichen Größe deklariert.
+Bei einer Veröffentlichung nach Quelländerungen die Versionskennung `CACHE` in `sw.js` erhöhen. Sobald der neue Stand vollständig gespeichert wurde, aktiviert er sich und lädt bereits geöffnete Seiten dieser App einmal neu. Alte App-Caches werden entfernt.
+
+## Icons
+
+`images/flowers-icon.ico` ist das bereitgestellte Favicon mit mehreren Auflösungen. Das iOS-Icon `images/apple-touch-icon.png` verwendet die bereits enthaltene quadratische 256 × 256 px PNG-Version aus dieser ICO-Datei ohne Pixeländerungen. Es ist auf allen Seiten und im Web-App-Manifest verknüpft und wird offline gespeichert. Das bereitgestellte Original-PNG liegt unverändert unter `images/flowers-icon.png`.
 
 ## Prüfen
 

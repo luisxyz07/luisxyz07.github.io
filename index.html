@@ -1,401 +1,59 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Deine Welten</title>
-
-<!-- PWA -->
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#020010">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Welten">
-<link rel="apple-touch-icon" href="/images/icon.png">
-<link rel="icon" href="/images/logo.ico">
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-  :root {
-    --safe-top:    env(safe-area-inset-top,    0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
-  *, *::before, *::after {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  html, body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    overscroll-behavior: none;
-    touch-action: none;
-    background: #020010;
-    color: #fff;
-    font-family: "Roboto", sans-serif;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  /* ── Space background ───────────────────────────────────────────────────── */
-  .space-bg {
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 15% 35%, rgba(76,29,149,.28)  0%, transparent 55%),
-      radial-gradient(ellipse at 85% 12%, rgba(29,78,216,.18)  0%, transparent 48%),
-      radial-gradient(ellipse at 60% 85%, rgba(190,24,93,.14)  0%, transparent 52%),
-      linear-gradient(168deg, #020010 0%, #07001e 45%, #0b0029 100%);
-    z-index: 0;
-  }
-
-  /* ── Nebula blobs ───────────────────────────────────────────────────────── */
-  .nebula {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
-    filter: blur(90px);
-  }
-
-  /* ── Stars ──────────────────────────────────────────────────────────────── */
-  .stars-layer { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
-  .star {
-    position: absolute;
-    border-radius: 50%;
-    background: #fff;
-    animation: star-twinkle ease-in-out infinite;
-  }
-  @keyframes star-twinkle {
-    0%,100% { opacity: var(--op, .7); transform: scale(1); }
-    50%     { opacity: calc(var(--op, .7) * .12); transform: scale(.55); }
-  }
-
-  /* ── Screen ─────────────────────────────────────────────────────────────── */
-  .screen {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding:
-      calc(var(--safe-top)  + 40px)
-      20px
-      calc(var(--safe-bottom) + 20px);
-    min-height: 100dvh;
-  }
-
-  /* ── Header ─────────────────────────────────────────────────────────────── */
-  .eyebrow {
-    font-size: .62rem;
-    font-weight: 500;
-    letter-spacing: .38em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.32);
-    margin-bottom: 10px;
-  }
-  .site-title {
-    font-weight: 300;
-    font-size: clamp(2.6rem, 11vw, 3.8rem);
-    letter-spacing: -.02em;
-    line-height: 1;
-    margin: 0;
-    background: linear-gradient(135deg, #fff 0%, #d8b4fe 52%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 28px rgba(167,139,250,.55));
-  }
-  .site-sub {
-    font-style: italic;
-    font-size: clamp(.95rem, 4vw, 1.15rem);
-    color: rgba(255,255,255,.38);
-    margin-top: 8px;
-    letter-spacing: .07em;
-  }
-
-  /* ── Portal grid ─────────────────────────────────────────────────────────── */
-  .portals-container {
-    width: 100%;
-    max-width: 390px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    align-items: center;
-  }
-  .portals-row {
-    display: flex;
-    gap: 14px;
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* ── Portal card ─────────────────────────────────────────────────────────── */
-  .portal {
-    flex: 1;
-    max-width: 178px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 10px;
-    border-radius: 26px;
-    border: 1px solid rgba(255,255,255,.07);
-    background: rgba(255,255,255,.025);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    text-decoration: none;
-    color: #fff;
-    cursor: pointer;
-    transition: transform .18s ease, border-color .18s ease, background .18s ease;
-  }
-  .portal:active { transform: scale(.93); }
-  .portal:hover  { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.05); }
-  .portal.disabled { pointer-events: none; opacity: .32; }
-
-  /* ── Orb ─────────────────────────────────────────────────────────────────── */
-  .orb-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
-  .orb {
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  /* Specular highlight */
-  .orb::before {
-    content: '';
-    position: absolute;
-    width: 36%; height: 26%;
-    background: rgba(255,255,255,.28);
-    border-radius: 50%;
-    top: 11%; left: 11%;
-    filter: blur(4px);
-    z-index: 2;
-  }
-  /* Atmospheric rim darkening */
-  .orb::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, transparent 52%, rgba(0,0,0,.42) 100%);
-    z-index: 1;
-  }
-
-  /* ── Orbit rings ─────────────────────────────────────────────────────────── */
-  .ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.1);
-    pointer-events: none;
-    animation: ring-pulse 4s ease-in-out infinite;
-  }
-  .ring:nth-child(2) { animation-delay: -2s; }
-  @keyframes ring-pulse {
-    0%,100% { opacity: .38; transform: scale(1); }
-    50%     { opacity: .85; transform: scale(1.045); }
-  }
-
-  /* ── Planet colour variants ───────────────────────────────────────────────── */
-
-  /* Blumenwelt – warm rose-pink */
-  .orb-flowers {
-    background: radial-gradient(circle at 34% 29%, #fdf2f8 0%, #f9a8d4 14%, #ec4899 44%, #9d174d 74%, #500028 100%);
-    box-shadow: 0 0 26px 9px rgba(236,72,153,.48), 0 0 52px 22px rgba(157,23,77,.22);
-  }
-  .ring-flowers { border-color: rgba(236,72,153,.3); }
-
-  /* Sternennacht – deep violet-indigo */
-  .orb-night {
-    background: radial-gradient(circle at 34% 29%, #ede9fe 0%, #a78bfa 14%, #7c3aed 44%, #3b0764 76%, #0d0020 100%);
-    box-shadow: 0 0 26px 9px rgba(124,58,237,.48), 0 0 52px 22px rgba(59,7,100,.22);
-  }
-  .ring-night { border-color: rgba(139,92,246,.3); }
-
-  /* Coming soon – dark slate */
-  .orb-soon {
-    background: radial-gradient(circle at 34% 29%, #6b7280 0%, #374151 34%, #1f2937 70%, #0d1117 100%);
-    box-shadow: 0 0 12px 4px rgba(55,65,81,.22);
-  }
-
-  /* Birthday – warm gold */
-  .orb-birthday {
-    background: radial-gradient(circle at 34% 29%, #fef9c3 0%, #fde047 17%, #f59e0b 46%, #b45309 77%, #451a03 100%);
-    box-shadow: 0 0 26px 9px rgba(251,191,36,.55), 0 0 52px 22px rgba(245,158,11,.3);
-  }
-  .ring-birthday { border-color: rgba(253,224,71,.36); }
-
-  /* ── Portal text ─────────────────────────────────────────────────────────── */
-  .portal-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    letter-spacing: .04em;
-    text-align: center;
-    line-height: 1.2;
-  }
-  .portal-desc {
-    font-size: .63rem;
-    color: rgba(255,255,255,.38);
-    text-align: center;
-    letter-spacing: .06em;
-    line-height: 1.55;
-  }
-
-  /* ── Small single portal (bottom row) ───────────────────────────────────── */
-  .portal-sm { max-width: 200px; flex: none; }
-
-  /* ── Footer ──────────────────────────────────────────────────────────────── */
-  .footer-note {
-    font-size: .58rem;
-    letter-spacing: .28em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.17);
-    text-align: center;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .star, .ring { animation: none !important; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Deine Welten</title>
+  <meta name="description" content="Ein kleines Universum für dich. Blumen unter stillen Sternen, Cassiopeia und tanzende Nordlichter.">
+  <meta name="theme-color" content="#080b19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Welten">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="images/icon.png">
+  <link rel="icon" href="images/logo.ico">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/home.css">
+  <script src="assets/app.js" defer></script>
+  <script src="assets/update.js" defer></script>
 </head>
-<body>
-
-<!-- Space background -->
-<div class="space-bg"></div>
-
-<!-- Nebula atmosphere blobs -->
-<div class="nebula" style="width:430px;height:330px;top:-90px;right:-90px;background:#5b21b6;opacity:.14;"></div>
-<div class="nebula" style="width:500px;height:400px;top:33%;left:-170px;background:#1e3a8a;opacity:.09;"></div>
-<div class="nebula" style="width:370px;height:290px;bottom:-70px;right:8%;background:#9d174d;opacity:.1;"></div>
-
-<!-- Twinkling star field (populated by JS) -->
-<div class="stars-layer" id="starsLayer"></div>
-
-<!-- ── Main content ─────────────────────────────────────────────────────────── -->
-<div class="screen">
-
-  <!-- Header -->
-  <header style="text-align:center;">
-    <div class="eyebrow">✦ &nbsp; ein universum für dich &nbsp; ✦</div>
-    <h1 class="site-title">Deine Welten</h1>
-    <p class="site-sub">Wähle eine Welt und die Reise geht los!</p>
-  </header>
-
-  <!-- World portals -->
-  <div class="portals-container">
-
-    <!-- Row 1: two main worlds -->
-    <div class="portals-row">
-
-      <!-- Blumenwelt -->
-      <a href="under_quiet_stars/index.html" class="portal">
-        <div class="orb-wrap">
-          <div class="ring ring-flowers" style="inset:-14px;"></div>
-          <div class="ring ring-flowers" style="inset:-24px;"></div>
-          <div class="orb orb-flowers" style="width:88px;height:88px;"></div>
-        </div>
-        <div class="portal-name">Blumenwelt</div>
-        <div class="portal-desc">Blumen unter<br>stillen Sternen</div>
-      </a>
-
-      <!-- Sternennacht -->
-      <a href="nights_embrace/index.html" class="portal">
-        <div class="orb-wrap">
-          <div class="ring ring-night" style="inset:-14px;"></div>
-          <div class="ring ring-night" style="inset:-24px;"></div>
-          <div class="orb orb-night" style="width:88px;height:88px;"></div>
-        </div>
-        <div class="portal-name">Sternennacht</div>
-        <div class="portal-desc">Cassiopeia am<br>nächtlichen Himmel</div>
-      </a>
-
-    </div>
-
-    <!-- Row 2: coming soon OR birthday (swapped by JS on Sept 6) -->
-    <div class="portals-row">
-
-      <!-- Coming soon (shown by default) -->
-      <div class="portal portal-sm disabled" id="portalSoon">
-        <div class="orb-wrap">
-          <div class="orb orb-soon" style="width:68px;height:68px;"></div>
-        </div>
-        <div class="portal-name" style="font-size:.92rem;opacity:.55;">Bald …</div>
-        <div class="portal-desc">Eine neue Welt<br>entsteht</div>
+<body class="home">
+  <div class="space-bg" aria-hidden="true"></div>
+  <div class="stars-layer" data-stars="home" aria-hidden="true"></div>
+  <div class="celestial-orbit orbit-one" aria-hidden="true"></div>
+  <div class="celestial-orbit orbit-two" aria-hidden="true"></div>
+  <button class="motion-toggle" type="button" data-motion-toggle aria-label="Animationen pausieren" aria-pressed="false"><span class="motion-icon" aria-hidden="true"></span></button>
+  <main class="screen">
+    <header class="home-header">
+      <svg class="celestial-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="14"/><ellipse cx="24" cy="24" rx="23" ry="8" transform="rotate(-35 24 24)"/><path d="M24 4v5m0 30v5M4 24h5m30 0h5"/><circle cx="36" cy="13" r="2" fill="currentColor" stroke="none"/></svg>
+      <p class="eyebrow">ein universum für dich</p>
+      <h1 class="site-title">Deine <em>Welten</em></h1>
+      <p class="site-sub">Wähle eine Welt und die Reise geht los!</p>
+    </header>
+    <nav class="portals-container" aria-label="Deine Welten entdecken">
+      <div class="portals-row">
+        <a href="under_quiet_stars/index.html" class="portal portal-flowers">
+          <span class="portal-number" aria-hidden="true">01 /</span>
+          <span class="orb-wrap" aria-hidden="true"><span class="planet-orbit"></span><span class="orb orb-flowers"></span><span class="planet-spark">✦</span></span>
+          <span class="portal-copy"><span class="portal-name">Blumenwelt</span><span class="portal-desc">Blumen unter<br>stillen Sternen</span></span>
+          <span class="portal-enter" aria-hidden="true">Entdecken <span>↗</span></span>
+        </a>
+        <a href="nights_embrace/index.html" class="portal portal-night">
+          <span class="portal-number" aria-hidden="true">02 /</span>
+          <span class="orb-wrap" aria-hidden="true"><span class="planet-orbit"></span><span class="orb orb-night"></span><span class="planet-spark">✦</span></span>
+          <span class="portal-copy"><span class="portal-name">Sternennacht</span><span class="portal-desc">Cassiopeia am<br>nächtlichen Himmel</span></span>
+          <span class="portal-enter" aria-hidden="true">Entdecken <span>↗</span></span>
+        </a>
       </div>
-
-      <!-- Birthday portal (hidden by default) -->
-      <a href="birthday/index.html" class="portal portal-sm" id="portalBirthday" style="display:none;flex-direction:column;align-items:center;">
-        <div class="orb-wrap">
-          <div class="ring ring-birthday" style="inset:-11px;"></div>
-          <div class="orb orb-birthday" style="width:68px;height:68px;"></div>
-        </div>
-        <div class="portal-name" style="font-size:.92rem;">🎂 Geburtstag</div>
-        <div class="portal-desc">Nur heute<br>für dich</div>
-      </a>
-
-    </div>
-
-  </div>
-
-  <!-- Footer -->
-  <p class="footer-note">✦ &nbsp; Made with heart by Luis &nbsp; ✦</p>
-
-</div>
-
-<script>
-// ── Star field ──────────────────────────────────────────────────────────────
-(function () {
-  const layer = document.getElementById('starsLayer');
-  const frag  = document.createDocumentFragment();
-  const count = window.innerWidth < 500 ? 150 : 220;
-
-  for (let i = 0; i < count; i++) {
-    const el   = document.createElement('div');
-    const rand = Math.random();
-    const size = rand < .65 ? 1 : rand < .85 ? 1.5 : 2.5;
-    const op   = (.22 + Math.random() * .78).toFixed(2);
-    const dur  = (2   + Math.random() * 5 ).toFixed(1);
-    const del  = (Math.random() * 8).toFixed(1);
-
-    el.className = 'star';
-    el.style.cssText =
-      'left:'   + (Math.random() * 100).toFixed(1) + '%;' +
-      'top:'    + (Math.random() * 100).toFixed(1) + '%;' +
-      'width:'  + size + 'px;height:' + size + 'px;' +
-      '--op:'   + op + ';' +
-      'animation-duration:' + dur + 's;' +
-      'animation-delay:-'   + del + 's;' +
-      (size >= 2 ? 'box-shadow:0 0 ' + (size*3) + 'px ' + size + 'px rgba(255,255,255,' + (op*.5).toFixed(2) + ');' : '');
-
-    frag.appendChild(el);
-  }
-  layer.appendChild(frag);
-}());
-
-// ── Birthday portal gate ────────────────────────────────────────────────────
-(function () {
-  const d = new Date();
-  if (d.getMonth() === 9 && d.getDate() === 1) {   // 0-indexed → September = 8
-    document.getElementById('portalSoon').style.display    = 'none';
-    document.getElementById('portalBirthday').style.display = 'flex';
-  }
-}());
-</script>
+      <div class="portals-row">
+        <a href="northern_lights/index.html" class="portal portal-aurora">
+          <span class="orb-wrap" aria-hidden="true"><span class="planet-orbit"></span><span class="orb orb-aurora"></span></span>
+          <span class="portal-copy"><span class="new-label">Eine neue Welt</span><span class="portal-name">Nordlicht</span><span class="portal-desc">Wo der Himmel leise tanzt</span></span>
+          <span class="aurora-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </nav>
+    <footer class="home-footer"><span class="footer-star" aria-hidden="true">✦</span><p class="footer-note">Made with heart by Luis</p></footer>
+  </main>
 </body>
 </html>

@@ -1,0 +1,16 @@
+.aurora-world { background: #080f1c; overflow-x: hidden; }
+.aurora-scene { position: relative; min-height: 620px; height: 100vh; height: 100dvh; overflow: hidden; isolation: isolate; background: radial-gradient(ellipse at 50% 60%, #1c454c63, transparent 65%), linear-gradient(#080e1c, #102632 68%, #080f1c 69%); }
+.aurora-fallback { position: absolute; width: 160%; height: 35%; left: -30%; top: 24%; background: radial-gradient(ellipse at 35% 50%, #80d1b92e, transparent 60%), radial-gradient(ellipse at 70% 60%, #a092d52e, transparent 60%); transform: rotate(-12deg); filter: blur(25px); }
+.aurora-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; touch-action: pan-y pinch-zoom; }
+.aurora-heading { padding-top: calc(var(--safe-top) + 110px); z-index: 4; }
+.aurora-heading .scene-eyebrow { color: #b5d5d0; }
+.aurora-heading .scene-title { font-style: italic; font-size: clamp(3.5rem, 12vw, 6rem); color: #e0f3e9; letter-spacing: -.055em; }
+.aurora-heading .scene-subtitle { color: #c2d3d7; line-height: 1.8; margin-top: 18px; }
+.aurora-landscape { position: absolute; top: 48%; height: 24%; width: 100%; left: 0; z-index: 2; pointer-events: none; }
+.lake-shimmer { position: absolute; left: 0; right: 0; top: 70%; bottom: 0; background: repeating-linear-gradient(0deg, #080f1c12 0 1px, transparent 1px 5px); z-index: 2; pointer-events: none; }
+.aurora-controls { position: absolute; bottom: calc(var(--safe-bottom) + 22px); left: max(20px, var(--safe-left)); right: max(20px, var(--safe-right)); z-index: 5; text-align: center; }
+.lake-hint { color: #c2d3d7; font: italic .9375rem/1.5 var(--serif); margin: 0 0 16px; }
+.aurora-controls .scene-action { color: #d6f2e8; border-color: #a0e4d240; background: #102632d9; }
+.light-status { color: #c2d3d7; font-size: .75rem; min-height: 1.5em; margin: 10px 0 0; }
+.light-status:empty { visibility: hidden; }
+@media (max-height: 600px) { .aurora-scene { min-height: 510px; } .aurora-heading { padding-top: calc(var(--safe-top) + 80px); } .aurora-heading .scene-title { font-size: 3.5rem; } .aurora-heading .scene-subtitle { margin-top: 8px; } .aurora-controls { bottom: calc(var(--safe-bottom) + 12px); } .lake-hint { margin-bottom: 10px; } }

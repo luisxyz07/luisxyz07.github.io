@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cat Animation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Kiwis Geheimversteck · Deine Welten</title>
+    <meta name="theme-color" content="#080b19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../images/icon.png">
+    <link rel="icon" href="../images/logo.ico">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="cat_style.css" />
-  </head>
-  <body>
-    <button class="back-btn" id="backBtn">&#8592;</button>
-    <h2 class="temp_message">Hier ist eine kleine Überraschung für dich!<br><i>Kiwi's Geheimversteck...</i></h2>
-    <div class="container">
+    <link rel="stylesheet" href="../assets/app.css">
+    <link rel="stylesheet" href="../assets/worlds.css">
+    <script src="../assets/app.js" defer></script>
+    <script src="../assets/update.js" defer></script>
+  <meta name="apple-mobile-web-app-title" content="Welten">
+</head>
+  <body class="cat-world">
+    <div class="scene-stars" data-stars="cats" aria-hidden="true"></div>
+    <a class="world-back" href="index.html">Zurück</a>
+    <button class="motion-toggle" type="button" data-motion-toggle aria-label="Animationen pausieren" aria-pressed="false"><span class="motion-icon" aria-hidden="true"></span></button>
+    <main class="cat-main">
+    <header class="cat-heading"><p>Hier ist eine kleine Überraschung für dich!</p><h1>Kiwi's <em>Geheimversteck...</em></h1></header>
+    <div class="cat-scene"><div class="container" role="img" aria-label="Kiwi sitzt am Fenster und schaut zum goldenen Mond">
       <div class="window">
         <div class="mountain-1"></div>
         <div class="mountain-2"></div>
@@ -20,10 +35,6 @@
         <div class="star"></div>
       </div>
     </div>
+    </div></main>
   </body>
-  <script>
-    document.getElementById('backBtn').addEventListener('click', function() {
-        window.location.href = 'index.html';
-    });
-  </script>
 </html>

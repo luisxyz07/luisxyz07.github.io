@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Cassiopeia Night Sky</title>
+<title>Sternennacht · Deine Welten</title>
 
 <!-- iPhone / web-app optimization -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#060010">
+<meta name="theme-color" content="#080b19">
 <meta name="format-detection" content="telephone=no">
 
 <style>
@@ -347,10 +347,18 @@
     background: rgba(255, 255, 255, 0.3);
   }
 </style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../images/icon.png">
+<link rel="icon" href="../images/logo.ico">
+<link rel="stylesheet" href="../assets/app.css">
+<link rel="stylesheet" href="../assets/night.css">
+<script src="../assets/app.js" defer></script>
+<script src="../assets/update.js" defer></script>
+<meta name="apple-mobile-web-app-title" content="Welten">
 </head>
 <body>
-<div class="sky">
-  <button class="back-btn" id="backBtn">Zurück</button>
+<main class="sky">
+  <a class="world-back" href="../index.html">Zurück</a><button class="motion-toggle" type="button" data-motion-toggle aria-label="Animationen pausieren" aria-pressed="false"><span class="motion-icon" aria-hidden="true"></span></button><header class="scene-heading night-heading"><p class="scene-eyebrow">Sternennacht</p><h1 class="scene-title">Unter demselben Himmel.</h1></header>
   <div class="mountains">
     <div class="mountain-1"></div>
     <div class="mountain-2"></div>
@@ -360,12 +368,10 @@
   </div>
   <div class="mountains-base"></div>
   <div class="light-base"></div>
-  <div class="stars"></div>
-  <div class="stars-cross"></div>
-  <div class="stars-cross-aux"></div>
+  <div class="stars" data-stars="night" aria-hidden="true"></div>
 
   <!-- Cassiopeia, positioned dead-center-upper of the viewport -->
-  <div class="cassiopeia" id="cassiopeia">
+  <div class="cassiopeia" id="cassiopeia" role="img" aria-label="Das Sternbild Cassiopeia, fünf Sterne durch eine W-förmige Linie verbunden">
     <svg viewBox="0 0 100 40" preserveAspectRatio="none">
       <polyline class="cass-line"
         points="8,32 34,8 50,26 74,4 92,30" />
@@ -382,106 +388,6 @@
     <div class="cass-star" style="width:4.5px;height:4.5px;left:92%;top:75%;box-shadow:0 0 7px 2px rgba(255,255,255,0.55);animation-delay:.6s,0s;"></div>
     <div class="cass-label">Cassiopeia</div>
   </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-$(function() {
-  var nightsky = ["#280F36", "#632B6C", "#BE6590", "#FFC1A0", "#FE9C7F"];
-
-  var star0 = "<div class='star star-0' style='top:{{top}}vh;left:{{left}}vw;animation-duration:{{duration}}s;'></div>";
-  var star1 = "<div class='star star-1 blink' style='top:{{top}}vh;left:{{left}}vw;animation-duration:{{duration}}s;'></div>";
-  var star2 = "<div class='star star-2 blink' style='top:{{top}}vh;left:{{left}}vw;animation-duration:{{duration}}s;'></div>";
-  var star4 = "<div class='star star-4 blink' style='top:{{top}}vh;left:{{left}}vw;animation-duration:{{duration}}s;'></div>";
-  var star5 = "<div class='star star-5' style='top:{{top}}vh;left:{{left}}vw;animation-duration:{{duration}}s;background-color:{{color}}'></div>";
-  var star1pt = "<div class='star star-1 blink' style='top:{{top}}%;left:{{left}}%;animation-duration:{{duration}}s;background-color:{{color}};box-shadow:0px 0px 6px 1px {{shadow}}'></div>";
-  var star2pt = "<div class='star star-2' style='top:{{top}}%;left:{{left}}%;animation-duration:{{duration}}s;background-color:{{color}};box-shadow:0px 0px 10px 1px {{shadow}};opacity:0.7'></div>";
-  var blur = "<div class='blur' style='top:{{top}}%;left:{{left}}%;background-color:{{color}}'></div>";
-
-  // Star field density is trimmed down from the desktop original
-  // (roughly 45-55% fewer DOM nodes) to keep animation smooth on
-  // iPhone Safari / home-screen web-app contexts.
-  var isMobile = /iPhone|iPod|Android/i.test(navigator.userAgent);
-  var scale = isMobile ? 0.45 : 1;
-
-  function reps(n) { return Math.round(n * scale); }
-
-  // Skip placing background stars where Cassiopeia sits, so the
-  // constellation reads clearly against the field.
-  function inCassiopeiaZone(topVh, leftVw) {
-    return topVh > 15 && topVh < 55 && leftVw > 22 && leftVw < 78;
-  }
-
-  for (i = 0; i < reps(500); i++) {
-    var t1 = getRandomInt(0, 40), l1 = getRandomInt(0, 100);
-    if (!inCassiopeiaZone(t1, l1)) {
-      $(".stars").append(star1.replace("{{top}}", t1).replace("{{left}}", l1).replace("{{duration}}", getRandomInt(2, 5)));
-    }
-    var t2 = getRandomInt(20, 70), l2 = getRandomInt(0, 100);
-    if (!inCassiopeiaZone(t2, l2)) {
-      $(".stars").append(star2.replace("{{top}}", t2).replace("{{left}}", l2).replace("{{duration}}", getRandomInt(4, 8)));
-    }
-  }
-
-  for (i = 0; i < reps(150); i++) {
-    $(".stars").append(star0.replace("{{top}}", getRandomInt(0, 50)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(1, 2.5)));
-    $(".stars").append(star1.replace("{{top}}", getRandomInt(0, 50)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(2.5, 4)));
-    $(".stars").append(star2.replace("{{top}}", getRandomInt(0, 50)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(4, 5)));
-  }
-
-  for (i = 0; i < reps(100); i++) {
-    $(".stars").append(star0.replace("{{top}}", getRandomInt(40, 75)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(1, 3)));
-    $(".stars").append(star1.replace("{{top}}", getRandomInt(40, 75)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(2, 4)));
-  }
-
-  for (i = 0; i < reps(250); i++) {
-    $(".stars").append(star0.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(1, 2)));
-    $(".stars").append(star1.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(2, 5)));
-    $(".stars").append(star2.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(1, 4)));
-    $(".stars").append(star4.replace("{{top}}", getRandomInt(0, 70)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(5, 7)));
-  }
-
-  for (i = 0; i < reps(150); i++) {
-    $(".stars").append(star4.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(5, 7)));
-    $(".stars-cross").append(blur.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{color}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))]));
-    $(".stars-cross").append(
-      star1pt.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(6, 12))
-        .replace("{{color}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))])
-        .replace("{{shadow}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))])
-    );
-  }
-
-  for (i = 0; i < reps(50); i++) {
-    if (i % 2 == 0) {
-      $(".stars").append(star5.replace("{{top}}", getRandomInt(0, 50)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(5, 7)).replace("{{color}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))]));
-    }
-    $(".stars-cross-aux").append(blur.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{color}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))]));
-    $(".stars-cross-aux").append(
-      star2pt.replace("{{top}}", getRandomInt(0, 100)).replace("{{left}}", getRandomInt(0, 100)).replace("{{duration}}", getRandomInt(4, 10))
-        .replace("{{color}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))])
-        .replace("{{shadow}}", nightsky[Math.ceil(getRandomInt(0, nightsky.length - 1))])
-    );
-  }
-});
-
-function getRandomInt(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-// Lock viewport height to the actual visible area on iOS Safari
-// (handles the address-bar show/hide resize quirk).
-function setVH() {
-  document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
-}
-setVH();
-window.addEventListener('resize', setVH);
-window.addEventListener('orientationchange', setVH);
-
-const backBtn = document.getElementById('backBtn');
-
-backBtn.addEventListener('click', () => {
-  window.location.href = '../index.html';
-});
-</script>
+<svg class="mountain-ridge" viewBox="0 0 1440 350" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250L140 155 230 196 390 70 510 173 620 143 800 230 970 107 1120 180 1260 100 1440 210V350H0Z" fill="#29253e"/><path d="M0 280L200 230 330 261 540 179 660 246 840 205 1040 280 1240 218 1440 267V350H0Z" fill="#191a2d"/><path d="M0 305Q260 265 500 310T1000 298T1440 310V350H0Z" fill="#0c101f"/></svg><p class="scene-caption">Cassiopeia am nächtlichen Himmel</p></main>
 </body>
 </html>

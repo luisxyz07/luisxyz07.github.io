@@ -1,0 +1,69 @@
+body.home { min-height: 100vh; min-height: 100dvh; overflow-x: hidden; background: var(--ink); }
+.space-bg { position: fixed; inset: 0; background: radial-gradient(ellipse at 23% 45%, #56304d20, transparent 45%), radial-gradient(ellipse at 82% 30%, #55468f24, transparent 45%), radial-gradient(ellipse at 50% 100%, #24514c16, transparent 55%), linear-gradient(150deg, #080b19, #0e1022 60%, #080d19); pointer-events: none; }
+.celestial-orbit { position: fixed; left: 50%; top: 47%; width: 1050px; height: 650px; border: 1px solid #b6b2dd0b; border-radius: 50%; transform: translate(-50%, -50%) rotate(-28deg); pointer-events: none; }
+.orbit-two { width: 1450px; height: 850px; transform: translate(-50%, -50%) rotate(25deg); }
+.screen { position: relative; z-index: 2; min-height: 100vh; min-height: 100dvh; max-width: 960px; margin: auto; padding: calc(var(--safe-top) + 48px) max(24px, var(--safe-right)) calc(var(--safe-bottom) + 24px) max(24px, var(--safe-left)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 38px; }
+.home-header { text-align: center; animation: arrive 1.2s var(--ease) both; }
+.celestial-mark { display: block; width: 42px; height: 42px; margin: 0 auto 16px; color: #c6b6dd; stroke: currentColor; stroke-width: .7; }
+.eyebrow { font-size: .75rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+.site-title { font: 400 clamp(3rem, 8.5vw, 4.5rem)/1.08 var(--serif); letter-spacing: -.055em; margin: 0; color: var(--text); }
+.site-title em { font-weight: 400; color: var(--lavender); }
+.site-sub { color: var(--muted); font-size: .875rem; margin: 16px 0 0; line-height: 1.7; }
+.portals-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 550px; }
+.portals-row { display: flex; gap: 16px; width: 100%; }
+.portal { --accent: #e9b1c3; position: relative; min-width: 0; flex: 1; display: flex; flex-direction: column; align-items: center; padding: 25px 20px 18px; color: var(--text); text-decoration: none; border: 1px solid #ffffff14; border-radius: 22px; background: linear-gradient(160deg, #ffffff06, #ffffff02); transition: border-color .35s, background .35s, transform .35s var(--ease), box-shadow .35s; animation: arrive 1.3s .12s var(--ease) backwards; isolation: isolate; }
+.portal::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(ellipse at 50% 22%, #d280a414, transparent 70%); z-index: -1; }
+.portal-night { --accent: #c6b9ed; animation-delay: .22s; }
+.portal-night::before { background: radial-gradient(ellipse at 50% 22%, #9780d91c, transparent 70%); }
+.portal-number { position: absolute; top: 17px; left: 19px; color: #b3b6c9; font-size: .75rem; letter-spacing: .12em; }
+.orb-wrap { display: grid; place-items: center; position: relative; width: 155px; height: 155px; margin: 5px 0 10px; }
+.orb { width: 98px; height: 98px; border-radius: 50%; position: relative; box-shadow: inset -14px -12px 22px #0008, inset 1px 1px 2px #fff4, 0 0 45px -5px #d992b32e; animation: planet-float 8s ease-in-out infinite; }
+.orb::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #fff2, transparent 30%), radial-gradient(ellipse at 90% 90%, #05091bc9, transparent 65%); }
+.orb-flowers { background: radial-gradient(ellipse at 65% 18%, #fcddbf77, transparent 30%), repeating-radial-gradient(ellipse at 25% 35%, #e9b7bd33 0 2px, transparent 7px 14px), radial-gradient(circle at 32% 28%, #f4cabd, #cd8aab 35%, #9b597c 62%, #412c50 95%); }
+.orb-night { background: radial-gradient(ellipse at 30% 30%, #e4daf18a, transparent 30%), repeating-linear-gradient(-28deg, transparent 0 9px, #bbadeb33 10px 12px, transparent 17px 25px), radial-gradient(circle at 35% 25%, #bfb5e5, #7c72b3 36%, #4e467f 65%, #1a193d); box-shadow: inset -14px -12px 22px #0008, inset 1px 1px 2px #fff4, 0 0 45px -5px #ad8bfa33; animation-delay: -3s; }
+.planet-orbit { position: absolute; width: 147px; height: 147px; border: 1px solid #d6bad623; border-radius: 50%; transform: rotate(-30deg) scaleY(.48); }
+.planet-orbit::before { content: ''; position: absolute; inset: -15px; border: 1px solid #d6bad60c; border-radius: 50%; }
+.planet-spark { position: absolute; right: 11px; top: 21px; font-size: 13px; color: var(--accent); animation: spark-breathe 6s ease-in-out infinite; }
+.portal-night .planet-spark { top: auto; right: auto; left: 14px; bottom: 20px; animation-delay: -2s; }
+.portal-copy { display: flex; flex-direction: column; text-align: center; }
+.portal-name { font: 400 clamp(1.4rem, 4.8vw, 1.8rem)/1.2 var(--serif); letter-spacing: -.025em; }
+.portal-desc { margin-top: 9px; color: var(--muted); font-size: .8125rem; line-height: 1.65; }
+.portal-enter { display: flex; justify-content: space-between; align-items: center; width: 100%; border-top: 1px solid #ffffff0e; margin-top: 22px; padding-top: 14px; font-size: .75rem; color: var(--accent); letter-spacing: .04em; }
+.portal-enter span { font-size: 19px; line-height: 1; transition: transform .3s; }
+.portal-aurora { flex-direction: row; padding: 15px 24px 15px 10px; animation-delay: .32s; }
+.portal-aurora::before { background: radial-gradient(ellipse at 8% 50%, #65bda01a, transparent 65%); }
+.portal-aurora { --accent: var(--mint); }
+.portal-aurora .orb-wrap { width: 116px; height: 100px; margin: 0 12px 0 0; flex-shrink: 0; }
+.portal-aurora .orb { width: 65px; height: 65px; }
+.orb-aurora { background: repeating-linear-gradient(105deg, transparent 0 7px, #b9f7cc4d 9px 10px, transparent 14px 19px), radial-gradient(circle at 30% 25%, #cbf4d7, #72bba9 38%, #397c7e 65%, #1e344e); box-shadow: inset -10px -8px 16px #0009, 0 0 36px -5px #88d7bc33; animation-delay: -5s; }
+.portal-aurora .planet-orbit { width: 100px; height: 100px; border-color: #9cdcc42b; }
+.portal-aurora .portal-copy { text-align: left; }
+.portal-aurora .portal-name { margin-top: 4px; font-size: 1.6rem; }
+.portal-aurora .portal-desc { margin-top: 4px; }
+.new-label { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mint); }
+.aurora-arrow { margin-left: auto; padding-left: 12px; color: var(--accent); font-size: 24px; }
+.home-footer { text-align: center; animation: arrive 1.5s .4s var(--ease) both; }
+.footer-star { color: #c5b8dd; font-size: 12px; }
+.footer-note { font-size: .75rem; color: var(--muted); letter-spacing: .08em; margin: 11px 0 0; }
+@keyframes arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes planet-float { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-7px) rotate(3deg); } }
+@keyframes spark-breathe { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
+@media (hover: hover) { .portal:hover { transform: translateY(-5px); background: #ffffff08; border-color: #ffffff30; box-shadow: 0 15px 45px #0002; } .portal:hover .portal-enter span { transform: translate(2px, -2px); } }
+.portal:active { transform: scale(.98); }
+@media (max-width: 420px) {
+  .screen { gap: 30px; padding-top: calc(var(--safe-top) + 66px); padding-left: max(20px, var(--safe-left)); padding-right: max(20px, var(--safe-right)); }
+  .portals-container, .portals-row { gap: 12px; }
+  .portal { padding: 22px 13px 15px; border-radius: 18px; }
+  .orb-wrap { width: 120px; height: 132px; margin: 0 0 10px; }
+  .orb { width: 83px; height: 83px; }
+  .planet-orbit { width: 117px; height: 117px; }
+  .portal-number { left: 14px; top: 13px; }
+  .portal-enter { margin-top: 17px; }
+  .portal-aurora { padding: 13px 18px 13px 3px; }
+  .portal-aurora .orb-wrap { width: 90px; margin-right: 3px; }
+  .portal-aurora .planet-orbit { width: 84px; height: 84px; }
+  .portal-aurora .orb { width: 59px; height: 59px; }
+  .portal-aurora .portal-desc { font-size: .75rem; }
+}
+@media (max-height: 740px) and (min-width: 421px) { .screen { gap: 25px; } .celestial-mark { display: none; } }
+@media (max-width: 340px) { .site-sub { max-width: 26ch; } .portal-name { font-size: 1.25rem; } .portal-desc { font-size: .75rem; } .orb-wrap { width: 100px; } .planet-orbit { width: 104px; height: 104px; } }

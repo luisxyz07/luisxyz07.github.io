@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nordlicht · Deine Welten</title>
+  <meta name="description" content="Ein stiller See. Ein tanzender Himmel. Ein kleiner Moment nur für dich.">
+  <meta name="theme-color" content="#080f1c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Welten">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../images/icon.png">
+  <link rel="icon" href="../images/logo.ico">
+  <link rel="stylesheet" href="../assets/app.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="../assets/app.js" defer></script>
+  <script src="../assets/update.js" defer></script>
+  <script src="aurora.js" defer></script>
+</head>
+<body class="aurora-world">
+  <main class="aurora-scene">
+    <a class="world-back" href="../index.html">Zurück</a>
+    <button class="motion-toggle" type="button" data-motion-toggle aria-label="Animationen pausieren" aria-pressed="false"><span class="motion-icon" aria-hidden="true"></span></button>
+    <div class="aurora-fallback" aria-hidden="true"></div>
+    <div class="scene-stars" data-stars="aurora" aria-hidden="true"></div>
+    <canvas class="aurora-canvas" id="auroraCanvas" aria-hidden="true"></canvas>
+    <header class="scene-heading aurora-heading">
+      <p class="scene-eyebrow">Deine dritte Welt</p>
+      <h1 class="scene-title">Nordlicht</h1>
+      <p class="scene-subtitle">Manchmal tanzt der Himmel.<br>Und die Welt hält kurz still.</p>
+    </header>
+    <svg class="aurora-landscape" viewBox="0 0 1440 350" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 210L110 185 230 235 380 140 510 210 670 175 790 245 945 170 1050 200 1220 110 1340 185 1440 160V300H0Z" fill="#152c37"/>
+      <path d="M0 250L170 225 310 258 510 205 640 270 810 235 980 265 1170 205 1330 260 1440 230V300H0Z" fill="#0b1b28"/>
+      <path d="M0 280Q360 267 720 280T1440 280V350H0Z" fill="#080f1c"/>
+    </svg>
+    <div class="lake-shimmer" aria-hidden="true"></div>
+    <div class="aurora-controls">
+      <p class="lake-hint">Berühre den See. Lass ein Licht entstehen.</p>
+      <button class="scene-action" id="lightButton" type="button"><span aria-hidden="true">✧</span> Ein kleines Licht</button>
+      <p class="light-status" id="lightStatus" role="status" aria-live="polite"></p>
+    </div>
+  </main>
+</body>
+</html>

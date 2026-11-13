@@ -1,30 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Flowers</title>
+    <title>Blumenwelt · Deine Welten</title>
 
     <!-- Safari / iOS Web App -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Flowers">
+    <meta name="apple-mobile-web-app-title" content="Welten">
 
     <!-- Standard favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/icon.ico">
+    <meta name="theme-color" content="#080b19">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../images/icon.png">
+    <link rel="icon" href="../images/logo.ico">
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../assets/app.css">
+    <link rel="stylesheet" href="../assets/worlds.css">
+    <script src="../assets/app.js" defer></script>
+    <script src="../assets/update.js" defer></script>
+    <script src="flowers.js" defer></script>
   </head>
-  <body>
-    <div class="wrapper" id="stars-wrapper">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-    </div>
+  <body class="flower-world">
+    <div class="scene-stars" data-stars="flowers" aria-hidden="true"></div>
 
-    <button class="start-btn" id="startBtn">Was ist das?</button>
-    <button class="back-btn" id="backBtn">Zurück</button>
-    <h2 class="temp_message"></h2>
-    <div class="frame">
+    <button class="world-back" id="backBtn" type="button">Zurück</button>
+    <button class="motion-toggle" type="button" data-motion-toggle aria-label="Animationen pausieren" aria-pressed="false"><span class="motion-icon" aria-hidden="true"></span></button>
+    <main>
+      <header class="flower-intro" id="flowerIntro">
+        <p class="scene-eyebrow">Blumenwelt</p>
+        <h1 class="scene-title">Blumen unter<br><em>stillen Sternen.</em></h1>
+        <button class="scene-action" id="startBtn" type="button" aria-controls="flowerScene" aria-expanded="false">Was ist das? <span aria-hidden="true">✧</span></button>
+      </header>
+      <p class="flower-caption" id="flowerCaption" hidden>Blumen unter stillen Sternen</p>
+    <div class="frame" id="flowerScene" role="group" aria-label="Blumenstrauß mit einer kleinen Überraschung" aria-hidden="true" inert>
       <div class="flower">
         <div class="container container-1">
           <div class="stick"></div>
@@ -69,54 +79,11 @@
       </div>
 
       <div class="catc">
-        <a href="cats.html" id="catBtn" style="border: none; background: none; padding: 0;">
-            <img class="cat" src="images/cat2.png" />
+        <a href="cats.html" id="catBtn" aria-label="Kiwis Geheimversteck entdecken">
+            <img class="cat" src="images/cat2.png" alt="Kiwi schaut hinter der Vase hervor" />
         </a>
       </div>
     </div>
+    </main>
   </body>
-  <script>
-    // Start button
-    const btn = document.getElementById('startBtn');
-    const frame = document.querySelector('.frame');
-    const backBtn = document.getElementById('backBtn');
-    const tempMessage = document.querySelector('.temp_message');
-
-    btn.addEventListener('click', () => {
-      btn.classList.add('hidden');
-      frame.classList.add('visible');
-      tempMessage.classList.add('visible');
-      frame.classList.add('started');
-    });
-
-    backBtn.addEventListener('click', () => {
-      if (frame.classList.contains('started')) {
-        // hide frame and back button, show start button
-        frame.classList.remove('visible');
-        frame.classList.remove('started');
-        backBtn.classList.remove('visible');
-        btn.classList.remove('hidden');
-        tempMessage.classList.remove('visible');
-
-        // force animation reset by briefly removing and re-adding started
-        // a tiny timeout lets the browser register the class removal
-        void frame.offsetWidth;
-      }
-      else {
-        window.location.href = '../index.html';
-      }
-      
-    });
-
-    // stars scaling
-    function scaleStars() {
-      const wrapper = document.querySelector('.wrapper');
-      const scaleX = window.innerWidth / 2000;
-      const scaleY = window.innerHeight / 2000;
-      const scale = Math.max(scaleX, scaleY);
-      wrapper.style.transform = scale > 1 ? `scale(${scale})` : '';
-    }
-    scaleStars();
-    window.addEventListener('resize', scaleStars);
-  </script>
 </html>

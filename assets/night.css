@@ -1,0 +1,14 @@
+html, body { height: auto; min-height: 100%; touch-action: pan-y pinch-zoom; overflow-x: hidden; overflow-y: auto; -webkit-user-select: auto; user-select: auto; }
+.sky { position: relative; width: 100%; min-height: 560px; height: 100vh; height: 100dvh; overflow: hidden; background: radial-gradient(ellipse at 50% 100%, #a47e8d35, transparent 50%), radial-gradient(ellipse at 85% 25%, #6c558129, transparent 45%), linear-gradient(#080b19, #15172e 60%, #483348); }
+.night-heading .scene-title { color: #ece3f5; }
+.sky .stars { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sky .mountains, .sky .mountains-base, .sky .light-base { display: none; }
+.mountain-ridge { position: absolute; width: 100%; height: 30%; bottom: 0; left: 0; z-index: 2; }
+.sky .cassiopeia { top: 37%; width: min(78vw, 480px); height: min(25vw, 180px); }
+.sky .cass-line { stroke: #e5d3ed66; stroke-width: .35; stroke-dasharray: 170; stroke-dashoffset: 170; animation: drawLine 3s .4s var(--ease) forwards; }
+.sky .cass-star { animation: cassAppear 1.8s var(--ease) both; }
+.sky .cass-star::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; background: radial-gradient(circle, #d9d3f447, transparent 70%); animation: constellation-breathe 5s 2s ease-in-out infinite; }
+.sky .cass-label { color: #c5b7ce; letter-spacing: .3em; font-family: var(--sans); font-size: .75rem; margin-top: 25px; animation: cassAppear 2s 1.7s both; }
+.sky .scene-caption { position: absolute; bottom: calc(var(--safe-bottom) + 30px); color: #d0c3d4; }
+@keyframes constellation-breathe { 0%, 100% { opacity: .35; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.4); } }
+@media (max-height: 600px) { .sky .cassiopeia { top: 44%; height: 85px; width: 300px; } .sky .cass-label { margin-top: 15px; } }
